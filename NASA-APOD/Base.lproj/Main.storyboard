@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -42,7 +43,7 @@
                                                 </constraints>
                                                 <color key="tintColor" systemColor="systemRedColor"/>
                                                 <inset key="imageEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
-                                                <state key="normal" title="Button" image="heart.fill" catalog="system"/>
+                                                <state key="normal" title="Button" image="heart" catalog="system"/>
                                                 <connections>
                                                     <action selector="favoriteButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="S67-2p-GM0"/>
                                                 </connections>
@@ -123,6 +124,7 @@
                         <outlet property="myFavoritesButton" destination="Njl-3J-g6D" id="HHV-xk-a99"/>
                         <outlet property="titleLabel" destination="sM2-89-5BU" id="oaG-2G-a3Q"/>
                         <segue destination="YdY-0f-57h" kind="presentation" identifier="showFullImageSegue" id="2F8-E0-PLU"/>
+                        <segue destination="21E-7I-rPh" kind="showDetail" identifier="showMyFavoritesView" id="r42-jL-Xmh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -159,9 +161,102 @@
             </objects>
             <point key="canvasLocation" x="882.60869565217399" y="73.660714285714278"/>
         </scene>
+        <!--My Favorites View Controller-->
+        <scene sceneID="VS2-8H-NXa">
+            <objects>
+                <viewController id="21E-7I-rPh" customClass="MyFavoritesViewController" customModule="NASA_APOD" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vf8-BN-DEv">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Favorites" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dNh-0G-3cr">
+                                <rect key="frame" x="20" y="20" width="374" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="8g5-hE-PdE">
+                                <rect key="frame" x="20" y="71" width="374" height="712"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="0IS-PV-e67">
+                                    <size key="itemSize" width="150" height="150"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="dataCell" id="oP4-9G-pAA" customClass="ImageCollectionViewCell" customModule="NASA_APOD" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="0fh-j8-Nkk">
+                                            <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="g5d-Da-Nyo">
+                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="g5d-Da-Nyo" secondAttribute="trailing" id="AvL-Za-Ywz"/>
+                                                <constraint firstAttribute="bottom" secondItem="g5d-Da-Nyo" secondAttribute="bottom" id="NqL-U6-5kD"/>
+                                                <constraint firstItem="g5d-Da-Nyo" firstAttribute="leading" secondItem="0fh-j8-Nkk" secondAttribute="leading" id="OYa-Hb-tfb"/>
+                                                <constraint firstItem="g5d-Da-Nyo" firstAttribute="top" secondItem="0fh-j8-Nkk" secondAttribute="top" id="XrX-P5-P3t"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <connections>
+                                            <outlet property="itemImageView" destination="g5d-Da-Nyo" id="ADd-fY-c0x"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aar-L9-XX5">
+                                <rect key="frame" x="20" y="798" width="374" height="22"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uto-Ml-NIy">
+                                        <rect key="frame" x="16" y="0.0" width="60" height="22"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="O7Y-A3-iVd"/>
+                                        </constraints>
+                                        <state key="normal" title="Back" image="arrow.backward" catalog="system"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="uto-Ml-NIy" firstAttribute="leading" secondItem="aar-L9-XX5" secondAttribute="leading" constant="16" id="FeS-s1-b94"/>
+                                    <constraint firstAttribute="bottom" secondItem="uto-Ml-NIy" secondAttribute="bottom" id="IdX-9H-F4K"/>
+                                    <constraint firstItem="uto-Ml-NIy" firstAttribute="top" secondItem="aar-L9-XX5" secondAttribute="top" id="xLm-7p-07F"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="DTf-0X-AUn"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="aar-L9-XX5" firstAttribute="top" secondItem="8g5-hE-PdE" secondAttribute="bottom" constant="15" id="7HC-Fy-xNG"/>
+                            <constraint firstItem="dNh-0G-3cr" firstAttribute="leading" secondItem="DTf-0X-AUn" secondAttribute="leading" constant="20" id="AbG-94-t4A"/>
+                            <constraint firstItem="DTf-0X-AUn" firstAttribute="trailing" secondItem="8g5-hE-PdE" secondAttribute="trailing" constant="20" id="UXz-CE-G5o"/>
+                            <constraint firstItem="8g5-hE-PdE" firstAttribute="top" secondItem="dNh-0G-3cr" secondAttribute="bottom" constant="30" id="Y92-YT-87n"/>
+                            <constraint firstItem="8g5-hE-PdE" firstAttribute="leading" secondItem="DTf-0X-AUn" secondAttribute="leading" constant="20" id="bpd-US-Bfu"/>
+                            <constraint firstItem="aar-L9-XX5" firstAttribute="leading" secondItem="DTf-0X-AUn" secondAttribute="leading" constant="20" id="coM-UA-ISg"/>
+                            <constraint firstItem="DTf-0X-AUn" firstAttribute="trailing" secondItem="aar-L9-XX5" secondAttribute="trailing" constant="20" id="kP7-UE-W5g"/>
+                            <constraint firstItem="dNh-0G-3cr" firstAttribute="top" secondItem="DTf-0X-AUn" secondAttribute="top" constant="20" id="qJB-p0-vQ1"/>
+                            <constraint firstItem="DTf-0X-AUn" firstAttribute="trailing" secondItem="dNh-0G-3cr" secondAttribute="trailing" constant="20" id="vIh-VI-bNd"/>
+                            <constraint firstAttribute="bottom" secondItem="aar-L9-XX5" secondAttribute="bottom" constant="22" id="zGS-dA-eol"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="PEe-k7-8iz"/>
+                    <connections>
+                        <outlet property="collectionView" destination="8g5-hE-PdE" id="cLz-BR-U3L"/>
+                        <outlet property="titleLabel" destination="dNh-0G-3cr" id="7XS-Ra-3zt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lel-0h-gdk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="882.60869565217399" y="844.41964285714278"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="heart.fill" catalog="system" width="128" height="109"/>
+        <image name="arrow.backward" catalog="system" width="128" height="98"/>
+        <image name="heart" catalog="system" width="128" height="109"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -18,26 +18,26 @@ class ViewController: UIViewController {
     @IBOutlet weak var myFavoritesButton: UIButton!
     @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
     let networkManager =  Network()
-    var managedObjectContext: NSManagedObjectContext?
+    var apodDataLoader: ApodDataLoader?
     var currentAPOD: APODEntity?
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         addTapGestureToImageView()
-        managedObjectContext = PersistenceController.shared.container.viewContext
+        apodDataLoader = ApodDataLoader()
         fetchAPODFor(date: YearMonthDay.today.description)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
     func fetchAPODFor(date: String) {
-        if let savedAPOD = self.fetchSavedAPODFor(day: date) {
+        if let savedAPOD = self.apodDataLoader?.fetchSavedAPODFor(day: date) {
             updateAPODDetails(apodItem: savedAPOD)
             return
         }
         networkManager.loadAPODData(dateString: date) { [weak self] apodItem in
             if apodItem != nil {
-                if let savedAPODEntity = self?.saveAPOD(apodItem: apodItem!) {
+                if let savedAPODEntity = self?.apodDataLoader?.saveAPOD(apodItem: apodItem!) {
                     self?.updateAPODDetails(apodItem: savedAPODEntity)
                 }
                 
@@ -59,10 +59,16 @@ class ViewController: UIViewController {
         fetchAPODFor(date: yearMonthDay.description)
     }
     @IBAction func favoriteButtonTapped(_ sender: Any) {
+        if let apodEntity = currentAPOD {
+            apodEntity.isFavorite = !apodEntity.isFavorite
+            apodDataLoader?.saveFavorite(apodItem: apodEntity)
+            updateFavoriteButton()
+        }
         
     }
     @IBAction func myFavoriteButtonTapped(_ sender: Any) {
-       
+        performSegue(withIdentifier: "showMyFavoritesView", sender: nil)
+//        let myFavorite = apodDataLoader?.fetchMyFavoriteAPODs()
     }
     func addTapGestureToImageView() {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapOnImageView(_:)))
@@ -83,6 +89,7 @@ class ViewController: UIViewController {
         currentAPOD = apodItem
         titleLabel.text = apodItem.title
         descriptionLabel.text = apodItem.explanation
+        updateFavoriteButton()
         loadImageData(apodItem: apodItem)
     }
     
@@ -114,43 +121,19 @@ class ViewController: UIViewController {
         imageViewHeightConstraint.constant = newHeight
         view.layoutIfNeeded()
     }
-    func saveAPOD(apodItem: APODItem) -> APODEntity {
-        guard let managedObjectContext = managedObjectContext else {
-            fatalError("No Managed Object Context Available")
+    func updateFavoriteButton()  {
+        if let apodEntity = currentAPOD {
+            //update button image
+            var image: UIImage?
+            if apodEntity.isFavorite {
+                image = UIImage(systemName: "heart.fill")
+            } else {
+                image = UIImage(systemName: "heart")
+            }
+            if image != nil {
+                favoriteButton.setImage(image, for: .normal)
+            }
         }
-        // Create APOD Entity
-        let apodEntity = APODEntity(context: managedObjectContext)
-        apodEntity.date = apodItem.date
-        apodEntity.thumbnail = apodItem.thumbnail_url
-        apodEntity.explanation = apodItem.explanation
-        apodEntity.url = apodItem.url
-        apodEntity.hdUrl = apodItem.hdurl
-        apodEntity.title = apodItem.title
-        apodEntity.mediaType = apodEntity.mediaType
-        
-        PersistenceController.shared.save()
-        return apodEntity
     }
-    
-    func fetchSavedAPODFor(day: String) -> APODEntity? {
-        // Create Fetch Request
-        let fetchRequest: NSFetchRequest<APODEntity> = APODEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(
-            format: "date = %@", day
-        )
-        let context = PersistenceController.shared.container.viewContext
-        
-        do {
-            // Execute Fetch Request
-            let apodEntity = try context.fetch(fetchRequest).first
-            return apodEntity
-
-        } catch {
-            print("Unable to Execute Fetch Request, \(error)")
-        }
-        return nil
-    }
-
-
 }
 

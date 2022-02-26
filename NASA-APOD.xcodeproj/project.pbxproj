@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB3973A927CAB59E00448035 /* MyFavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3973A827CAB59E00448035 /* MyFavoritesViewController.swift */; };
+		DB3973AB27CABB6500448035 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3973AA27CABB6500448035 /* ImageCollectionViewCell.swift */; };
 		DB4145E227C986F100AFE5B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4145E127C986F100AFE5B6 /* AppDelegate.swift */; };
 		DB4145E427C986F100AFE5B6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4145E327C986F100AFE5B6 /* SceneDelegate.swift */; };
 		DB4145E627C986F100AFE5B6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4145E527C986F100AFE5B6 /* ViewController.swift */; };
@@ -21,9 +23,12 @@
 		DB41460427CA2C6C00AFE5B6 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB41460327CA2C6C00AFE5B6 /* Utilities.swift */; };
 		DB41460627CA9ED800AFE5B6 /* PanZoomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB41460527CA9ED800AFE5B6 /* PanZoomImageView.swift */; };
 		DB41460827CAA12D00AFE5B6 /* FullImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB41460727CAA12D00AFE5B6 /* FullImageViewController.swift */; };
+		DB41460A27CAACB800AFE5B6 /* ApodDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB41460927CAACB800AFE5B6 /* ApodDataLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DB3973A827CAB59E00448035 /* MyFavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFavoritesViewController.swift; sourceTree = "<group>"; };
+		DB3973AA27CABB6500448035 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		DB4145DE27C986F100AFE5B6 /* NASA-APOD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NASA-APOD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB4145E127C986F100AFE5B6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DB4145E327C986F100AFE5B6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -40,6 +45,7 @@
 		DB41460327CA2C6C00AFE5B6 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		DB41460527CA9ED800AFE5B6 /* PanZoomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanZoomImageView.swift; sourceTree = "<group>"; };
 		DB41460727CAA12D00AFE5B6 /* FullImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageViewController.swift; sourceTree = "<group>"; };
+		DB41460927CAACB800AFE5B6 /* ApodDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApodDataLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +89,8 @@
 				DB4145EC27C986F200AFE5B6 /* LaunchScreen.storyboard */,
 				DB4145EF27C986F200AFE5B6 /* Info.plist */,
 				DB41460727CAA12D00AFE5B6 /* FullImageViewController.swift */,
+				DB3973A827CAB59E00448035 /* MyFavoritesViewController.swift */,
+				DB3973AA27CABB6500448035 /* ImageCollectionViewCell.swift */,
 			);
 			path = "NASA-APOD";
 			sourceTree = "<group>";
@@ -92,6 +100,7 @@
 			children = (
 				DB4145FA27C9FB9300AFE5B6 /* APOD.xcdatamodeld */,
 				DB4145FD27CA024900AFE5B6 /* PersistenceController.swift */,
+				DB41460927CAACB800AFE5B6 /* ApodDataLoader.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -193,8 +202,11 @@
 				DB4145E227C986F100AFE5B6 /* AppDelegate.swift in Sources */,
 				DB41460627CA9ED800AFE5B6 /* PanZoomImageView.swift in Sources */,
 				DB4145F627C9A49E00AFE5B6 /* Network.swift in Sources */,
+				DB41460A27CAACB800AFE5B6 /* ApodDataLoader.swift in Sources */,
 				DB41460427CA2C6C00AFE5B6 /* Utilities.swift in Sources */,
+				DB3973AB27CABB6500448035 /* ImageCollectionViewCell.swift in Sources */,
 				DB4145E427C986F100AFE5B6 /* SceneDelegate.swift in Sources */,
+				DB3973A927CAB59E00448035 /* MyFavoritesViewController.swift in Sources */,
 				DB4145F827C9A54A00AFE5B6 /* APODItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
