@@ -29,6 +29,9 @@ class ViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if currentAPOD != nil {
+            updateAPODDetails(apodItem: currentAPOD!)
+        }
     }
     func fetchAPODFor(date: String) {
         if let savedAPOD = self.apodDataLoader?.fetchSavedAPODFor(day: date) {
@@ -50,6 +53,7 @@ class ViewController: UIViewController {
             if let destinationVC = segue.destination as? FullImageViewController, let currentAPOD = currentAPOD {
                 destinationVC.imageUrl = currentAPOD.url
                 destinationVC.hdImageUrl = currentAPOD.hdUrl
+                destinationVC.name = currentAPOD.title
             }
         }
     }
@@ -91,6 +95,11 @@ class ViewController: UIViewController {
         descriptionLabel.text = apodItem.explanation
         updateFavoriteButton()
         loadImageData(apodItem: apodItem)
+        
+        //Update Date on picker
+        //TODO: remove force unwrapping
+        let yearMonthDay = YearMonthDay(currentAPOD!.date!)
+        datePicker.date = yearMonthDay!.asDate()!
     }
     
     func loadImageData(apodItem: APODEntity) {
@@ -134,6 +143,9 @@ class ViewController: UIViewController {
                 favoriteButton.setImage(image, for: .normal)
             }
         }
+    }
+    func updateCurrentPOD(date: String)  {
+        fetchAPODFor(date: date)
     }
 }
 

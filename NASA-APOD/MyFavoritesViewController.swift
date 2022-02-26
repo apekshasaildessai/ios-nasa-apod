@@ -15,16 +15,24 @@ enum MyFavoriteViewConstants {
 class MyFavoritesViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var backButton: UIButton!
     var myFavoriteAPODs =  [APODEntity]()
     var apodDataLoader: ApodDataLoader?
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.dataSource = self
+        collectionView.delegate = self
         apodDataLoader = ApodDataLoader()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationItem.setHidesBackButton(true, animated: false)
+        self.title = "My Favorites"
         updateList()
+    }
+    //UI Actions
+    @IBAction func backButtonTapped(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
     }
     func updateList() {
         myFavoriteAPODs = apodDataLoader?.fetchMyFavoriteAPOD() ??  [APODEntity]()
@@ -54,5 +62,16 @@ extension MyFavoritesViewController: UICollectionViewDelegateFlowLayout {
         //TODO: Calculate and return
         return CGSize(width: 300, height: 300)
 
+    }
+}
+extension MyFavoritesViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let apodEntity = myFavoriteAPODs[indexPath.row]
+        //Set value in APODViewController
+        if let apodViewController = navigationController?.viewControllers.first as? ViewController {
+            apodViewController.updateCurrentPOD(date: apodEntity.date!)
+        }
+        //pop to apodViewController
+        navigationController?.popToRootViewController(animated: false)
     }
 }

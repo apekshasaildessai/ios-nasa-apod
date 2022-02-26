@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="gQh-M8-bGf">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Astronomy Picture of the Day-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="NASA_APOD" customModuleProvider="target" sceneMemberID="viewController">
@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mvH-3W-qhV">
-                                <rect key="frame" x="0.0" y="64" width="414" height="744"/>
+                                <rect key="frame" x="0.0" y="108" width="414" height="700"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0fe-UY-YfW" userLabel="ContentView">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="743.5"/>
@@ -114,7 +114,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="mvH-3W-qhV" secondAttribute="bottom" constant="54" id="y3P-Kg-J54"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="O4o-d5-Gfx"/>
+                    <navigationItem key="navigationItem" title="Astronomy Picture of the Day" id="O4o-d5-Gfx"/>
                     <connections>
                         <outlet property="apodImageView" destination="u4E-vc-145" id="I5p-ES-mbf"/>
                         <outlet property="datePicker" destination="5be-ci-6h4" id="ZBB-ls-xkI"/>
@@ -123,60 +123,86 @@
                         <outlet property="imageViewHeightConstraint" destination="Vda-8l-Cue" id="OQ4-UJ-Uas"/>
                         <outlet property="myFavoritesButton" destination="Njl-3J-g6D" id="HHV-xk-a99"/>
                         <outlet property="titleLabel" destination="sM2-89-5BU" id="oaG-2G-a3Q"/>
-                        <segue destination="YdY-0f-57h" kind="presentation" identifier="showFullImageSegue" id="2F8-E0-PLU"/>
-                        <segue destination="21E-7I-rPh" kind="showDetail" identifier="showMyFavoritesView" id="r42-jL-Xmh"/>
+                        <segue destination="YdY-0f-57h" kind="show" identifier="showFullImageSegue" id="2F8-E0-PLU"/>
+                        <segue destination="21E-7I-rPh" kind="show" identifier="showMyFavoritesView" id="r42-jL-Xmh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="137.68115942028987" y="73.660714285714278"/>
+            <point key="canvasLocation" x="1047.8260869565217" y="73.660714285714278"/>
         </scene>
         <!--Full Image View Controller-->
         <scene sceneID="10d-Aj-xcl">
             <objects>
                 <viewController id="YdY-0f-57h" customClass="FullImageViewController" customModule="NASA_APOD" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="noL-pD-902">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MUN-N3-ia1" customClass="PanZoomImageView" customModule="NASA_APOD" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="24" width="414" height="784"/>
+                                <rect key="frame" x="0.0" y="112" width="414" height="722"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6c6-vu-JQc">
+                                <rect key="frame" x="20" y="834" width="374" height="22"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QyV-4P-xa1">
+                                        <rect key="frame" x="16" y="0.0" width="60" height="22"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="J5q-rd-dW3"/>
+                                        </constraints>
+                                        <state key="normal" title="Back" image="arrow.backward" catalog="system"/>
+                                        <connections>
+                                            <action selector="backButtonTapped:" destination="YdY-0f-57h" eventType="touchUpInside" id="JYk-Pi-yId"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="QyV-4P-xa1" firstAttribute="leading" secondItem="6c6-vu-JQc" secondAttribute="leading" constant="16" id="WOH-TI-nhw"/>
+                                    <constraint firstItem="QyV-4P-xa1" firstAttribute="top" secondItem="6c6-vu-JQc" secondAttribute="top" id="XZk-6z-ysq"/>
+                                    <constraint firstAttribute="bottom" secondItem="QyV-4P-xa1" secondAttribute="bottom" id="owJ-YD-7ZG"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Rkw-6t-6Xm"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="MUN-N3-ia1" firstAttribute="leading" secondItem="Rkw-6t-6Xm" secondAttribute="leading" id="3Z4-3k-6vF"/>
+                            <constraint firstItem="Rkw-6t-6Xm" firstAttribute="trailing" secondItem="6c6-vu-JQc" secondAttribute="trailing" constant="20" id="3dJ-ok-zAg"/>
+                            <constraint firstItem="Rkw-6t-6Xm" firstAttribute="bottom" secondItem="6c6-vu-JQc" secondAttribute="bottom" constant="6" id="5t5-E8-BU5"/>
+                            <constraint firstItem="6c6-vu-JQc" firstAttribute="top" secondItem="MUN-N3-ia1" secondAttribute="bottom" id="XbG-HR-9tw"/>
                             <constraint firstItem="MUN-N3-ia1" firstAttribute="trailing" secondItem="Rkw-6t-6Xm" secondAttribute="trailing" id="e0J-G9-Mra"/>
                             <constraint firstItem="MUN-N3-ia1" firstAttribute="top" secondItem="Rkw-6t-6Xm" secondAttribute="top" constant="24" id="l1z-NM-zgb"/>
-                            <constraint firstItem="MUN-N3-ia1" firstAttribute="bottom" secondItem="Rkw-6t-6Xm" secondAttribute="bottom" id="pzi-je-6bU"/>
+                            <constraint firstItem="6c6-vu-JQc" firstAttribute="leading" secondItem="Rkw-6t-6Xm" secondAttribute="leading" constant="20" id="vTW-cH-lZx"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="wbz-QS-6tZ"/>
                     <connections>
+                        <outlet property="backButton" destination="QyV-4P-xa1" id="c72-ab-AQc"/>
                         <outlet property="zoomImageView" destination="MUN-N3-ia1" id="V1L-mm-dds"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FTE-q9-Sxb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="882.60869565217399" y="73.660714285714278"/>
+            <point key="canvasLocation" x="1792.753623188406" y="73.660714285714278"/>
         </scene>
         <!--My Favorites View Controller-->
         <scene sceneID="VS2-8H-NXa">
             <objects>
                 <viewController id="21E-7I-rPh" customClass="MyFavoritesViewController" customModule="NASA_APOD" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vf8-BN-DEv">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Favorites" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dNh-0G-3cr">
-                                <rect key="frame" x="20" y="20" width="374" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dNh-0G-3cr">
+                                <rect key="frame" x="20" y="108" width="374" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="8g5-hE-PdE">
-                                <rect key="frame" x="20" y="71" width="374" height="712"/>
+                                <rect key="frame" x="20" y="108" width="374" height="729"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="0IS-PV-e67">
                                     <size key="itemSize" width="150" height="150"/>
@@ -210,7 +236,7 @@
                                 </cells>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aar-L9-XX5">
-                                <rect key="frame" x="20" y="798" width="374" height="22"/>
+                                <rect key="frame" x="20" y="852" width="374" height="22"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uto-Ml-NIy">
                                         <rect key="frame" x="16" y="0.0" width="60" height="22"/>
@@ -218,6 +244,9 @@
                                             <constraint firstAttribute="width" constant="60" id="O7Y-A3-iVd"/>
                                         </constraints>
                                         <state key="normal" title="Back" image="arrow.backward" catalog="system"/>
+                                        <connections>
+                                            <action selector="backButtonTapped:" destination="21E-7I-rPh" eventType="touchUpInside" id="JSJ-dR-bsh"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -234,7 +263,7 @@
                             <constraint firstItem="aar-L9-XX5" firstAttribute="top" secondItem="8g5-hE-PdE" secondAttribute="bottom" constant="15" id="7HC-Fy-xNG"/>
                             <constraint firstItem="dNh-0G-3cr" firstAttribute="leading" secondItem="DTf-0X-AUn" secondAttribute="leading" constant="20" id="AbG-94-t4A"/>
                             <constraint firstItem="DTf-0X-AUn" firstAttribute="trailing" secondItem="8g5-hE-PdE" secondAttribute="trailing" constant="20" id="UXz-CE-G5o"/>
-                            <constraint firstItem="8g5-hE-PdE" firstAttribute="top" secondItem="dNh-0G-3cr" secondAttribute="bottom" constant="30" id="Y92-YT-87n"/>
+                            <constraint firstItem="8g5-hE-PdE" firstAttribute="top" secondItem="dNh-0G-3cr" secondAttribute="bottom" id="Y92-YT-87n"/>
                             <constraint firstItem="8g5-hE-PdE" firstAttribute="leading" secondItem="DTf-0X-AUn" secondAttribute="leading" constant="20" id="bpd-US-Bfu"/>
                             <constraint firstItem="aar-L9-XX5" firstAttribute="leading" secondItem="DTf-0X-AUn" secondAttribute="leading" constant="20" id="coM-UA-ISg"/>
                             <constraint firstItem="DTf-0X-AUn" firstAttribute="trailing" secondItem="aar-L9-XX5" secondAttribute="trailing" constant="20" id="kP7-UE-W5g"/>
@@ -245,13 +274,32 @@
                     </view>
                     <navigationItem key="navigationItem" id="PEe-k7-8iz"/>
                     <connections>
+                        <outlet property="backButton" destination="uto-Ml-NIy" id="IVB-Ut-j7q"/>
                         <outlet property="collectionView" destination="8g5-hE-PdE" id="cLz-BR-U3L"/>
                         <outlet property="titleLabel" destination="dNh-0G-3cr" id="7XS-Ra-3zt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lel-0h-gdk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="882.60869565217399" y="844.41964285714278"/>
+            <point key="canvasLocation" x="1048" y="862"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="fjw-1Z-Xa1">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gQh-M8-bGf" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="PfV-hX-ych">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="zb1-jS-o6d"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Eik-sc-7VC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="73.660714285714278"/>
         </scene>
     </scenes>
     <resources>
