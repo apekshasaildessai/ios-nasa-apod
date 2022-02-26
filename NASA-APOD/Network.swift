@@ -7,8 +7,9 @@
 
 import Foundation
 class Network {
-    func loadData(completion:@escaping (APODItem?) -> ()) {
-         guard let url = URL(string: "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&date=2022-02-22&thumbs=true") else {
+    let baseUrl = "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&thumbs=true"
+    func loadAPODData(dateString: String, completion:@escaping (APODItem?) -> ()) {
+         guard let url = URL(string: baseUrl + "&date=" + dateString) else {
              print("Invalid url...")
              return
          }

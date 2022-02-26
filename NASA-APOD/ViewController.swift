@@ -6,28 +6,45 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController {
   
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var apodImageView: UIImageView!
     @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
     let networkManager =  Network()
+    var managedObjectContext: NSManagedObjectContext?
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        loadAPOD()
+        managedObjectContext = PersistenceController.shared.container.viewContext
+        let date = "2022-02-25"
+        fetchAPODFor(date: date)
     }
-    func loadAPOD() {
-        networkManager.loadData { [weak self] apodItem in
+    func fetchAPODFor(date: String) {
+        if let savedAPOD = self.fetchSavedAPODFor(day: date) {
+            updateAPODDetails(apodItem: savedAPOD)
+            return
+        }
+        networkManager.loadAPODData(dateString: date) { [weak self] apodItem in
             if apodItem != nil {
-                self?.titleLabel.text = apodItem?.title
-                self?.descriptionLabel.text = apodItem?.explanation
-                self?.loadImageData(apodItem: apodItem!)
+                if let savedAPODEntity = self?.saveAPOD(apodItem: apodItem!) {
+                    self?.updateAPODDetails(apodItem: savedAPODEntity)
+                }
+                
             }
         }
     }
-    func loadImageData(apodItem: APODItem) {
+    
+    func updateAPODDetails(apodItem: APODEntity) {
+        titleLabel.text = apodItem.title
+        descriptionLabel.text = apodItem.explanation
+        loadImageData(apodItem: apodItem)
+    }
+    
+    func loadImageData(apodItem: APODEntity) {
         guard let urlString = apodItem.url else {
             print("Invalid url...")
             return
@@ -36,14 +53,60 @@ class ViewController: UIViewController {
             print("Invalid url...")
             return
         }
-        networkManager.loadImageData(url: url) { data, error in
+        networkManager.loadImageData(url: url) { [weak self] data, error in
             if data != nil {
                 DispatchQueue.main.async {
-                    self.apodImageView.image = UIImage(data: data!)
+                    self?.updateImage(data: data!)
                 }
                
             }
         }
+    }
+    func updateImage(data: Data) {
+        guard let image = UIImage(data: data) else {
+            return
+        }
+        apodImageView.image = image
+        let ratio = image.size.width / image.size.height
+        let newHeight = apodImageView.frame.width / ratio
+        imageViewHeightConstraint.constant = newHeight
+        view.layoutIfNeeded()
+    }
+    func saveAPOD(apodItem: APODItem) -> APODEntity {
+        guard let managedObjectContext = managedObjectContext else {
+            fatalError("No Managed Object Context Available")
+        }
+        // Create APOD Entity
+        let apodEntity = APODEntity(context: managedObjectContext)
+        apodEntity.date = apodItem.date
+        apodEntity.thumbnail = apodItem.thumbnail_url
+        apodEntity.explanation = apodItem.explanation
+        apodEntity.url = apodItem.url
+        apodEntity.hdUrl = apodItem.hdurl
+        apodEntity.title = apodItem.title
+        apodEntity.mediaType = apodEntity.mediaType
+        
+        PersistenceController.shared.save()
+        return apodEntity
+    }
+    
+    func fetchSavedAPODFor(day: String) -> APODEntity? {
+        // Create Fetch Request
+        let fetchRequest: NSFetchRequest<APODEntity> = APODEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(
+            format: "date = %@", day
+        )
+        let context = PersistenceController.shared.container.viewContext
+        
+        do {
+            // Execute Fetch Request
+            let apodEntity = try context.fetch(fetchRequest).first
+            return apodEntity
+
+        } catch {
+            print("Unable to Execute Fetch Request, \(error)")
+        }
+        return nil
     }
 
 

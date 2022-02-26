@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20D64" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="APODEntity" representedClassName="APODEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="String"/>
+        <attribute name="explanation" optional="YES" attributeType="String"/>
+        <attribute name="hdUrl" optional="YES" attributeType="String"/>
+        <attribute name="mediaType" optional="YES" attributeType="String"/>
+        <attribute name="thumbnail" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="url" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Entity1" representedClassName="Entity1" syncable="YES" codeGenerationType="class"/>
+    <elements>
+        <element name="APODEntity" positionX="-63" positionY="-18" width="128" height="134"/>
+        <element name="Entity1" positionX="-54" positionY="-9" width="128" height="29"/>
+    </elements>
+</model>
