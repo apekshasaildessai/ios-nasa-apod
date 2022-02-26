@@ -13,6 +13,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var apodImageView: UIImageView!
     @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var myFavoritesButton: UIButton!
     @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
     let networkManager =  Network()
     var managedObjectContext: NSManagedObjectContext?
@@ -20,8 +23,11 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         managedObjectContext = PersistenceController.shared.container.viewContext
-        let date = "2022-02-25"
-        fetchAPODFor(date: date)
+        fetchAPODFor(date: YearMonthDay.today.description)
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+//        datePicker.isHidden = true
     }
     func fetchAPODFor(date: String) {
         if let savedAPOD = self.fetchSavedAPODFor(day: date) {
@@ -37,7 +43,23 @@ class ViewController: UIViewController {
             }
         }
     }
-    
+    //UI methods
+    @IBAction func datePickerChanged(_ sender: Any) {
+        let yearMonthDay = YearMonthDay(localTime: datePicker.date)
+        fetchAPODFor(date: yearMonthDay.description)
+    }
+    @IBAction func favoriteButtonTapped(_ sender: Any) {
+        
+    }
+    @IBAction func myFavoriteButtonTapped(_ sender: Any) {
+        
+    }
+    func showHideDatePickerWithDate(date: Date?) {
+        if let givenDate = date {
+            datePicker.date = givenDate
+        }
+        datePicker.isHidden = !datePicker.isHidden
+    }
     func updateAPODDetails(apodItem: APODEntity) {
         titleLabel.text = apodItem.title
         descriptionLabel.text = apodItem.explanation

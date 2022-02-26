@@ -17,6 +17,8 @@
 		DB4145F827C9A54A00AFE5B6 /* APODItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4145F727C9A54A00AFE5B6 /* APODItem.swift */; };
 		DB4145FC27C9FB9300AFE5B6 /* APOD.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DB4145FA27C9FB9300AFE5B6 /* APOD.xcdatamodeld */; };
 		DB4145FE27CA024900AFE5B6 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4145FD27CA024900AFE5B6 /* PersistenceController.swift */; };
+		DB41460227CA2BBE00AFE5B6 /* YearMonthDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB41460127CA2BBE00AFE5B6 /* YearMonthDay.swift */; };
+		DB41460427CA2C6C00AFE5B6 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB41460327CA2C6C00AFE5B6 /* Utilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		DB4145F727C9A54A00AFE5B6 /* APODItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODItem.swift; sourceTree = "<group>"; };
 		DB4145FB27C9FB9300AFE5B6 /* APOD.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = APOD.xcdatamodel; sourceTree = "<group>"; };
 		DB4145FD27CA024900AFE5B6 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		DB41460127CA2BBE00AFE5B6 /* YearMonthDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearMonthDay.swift; sourceTree = "<group>"; };
+		DB41460327CA2C6C00AFE5B6 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +68,8 @@
 		DB4145E027C986F100AFE5B6 /* NASA-APOD */ = {
 			isa = PBXGroup;
 			children = (
+				DB41460027CA2BA400AFE5B6 /* Utility */,
+				DB4145FF27CA2A6800AFE5B6 /* Networking */,
 				DB4145F927C9FB5100AFE5B6 /* Database */,
 				DB4145E127C986F100AFE5B6 /* AppDelegate.swift */,
 				DB4145E327C986F100AFE5B6 /* SceneDelegate.swift */,
@@ -72,8 +78,6 @@
 				DB4145EA27C986F200AFE5B6 /* Assets.xcassets */,
 				DB4145EC27C986F200AFE5B6 /* LaunchScreen.storyboard */,
 				DB4145EF27C986F200AFE5B6 /* Info.plist */,
-				DB4145F527C9A49E00AFE5B6 /* Network.swift */,
-				DB4145F727C9A54A00AFE5B6 /* APODItem.swift */,
 			);
 			path = "NASA-APOD";
 			sourceTree = "<group>";
@@ -85,6 +89,24 @@
 				DB4145FD27CA024900AFE5B6 /* PersistenceController.swift */,
 			);
 			path = Database;
+			sourceTree = "<group>";
+		};
+		DB4145FF27CA2A6800AFE5B6 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				DB4145F527C9A49E00AFE5B6 /* Network.swift */,
+				DB4145F727C9A54A00AFE5B6 /* APODItem.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		DB41460027CA2BA400AFE5B6 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				DB41460127CA2BBE00AFE5B6 /* YearMonthDay.swift */,
+				DB41460327CA2C6C00AFE5B6 /* Utilities.swift */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -159,9 +181,11 @@
 			files = (
 				DB4145E627C986F100AFE5B6 /* ViewController.swift in Sources */,
 				DB4145FE27CA024900AFE5B6 /* PersistenceController.swift in Sources */,
+				DB41460227CA2BBE00AFE5B6 /* YearMonthDay.swift in Sources */,
 				DB4145FC27C9FB9300AFE5B6 /* APOD.xcdatamodeld in Sources */,
 				DB4145E227C986F100AFE5B6 /* AppDelegate.swift in Sources */,
 				DB4145F627C9A49E00AFE5B6 /* Network.swift in Sources */,
+				DB41460427CA2C6C00AFE5B6 /* Utilities.swift in Sources */,
 				DB4145E427C986F100AFE5B6 /* SceneDelegate.swift in Sources */,
 				DB4145F827C9A54A00AFE5B6 /* APODItem.swift in Sources */,
 			);
