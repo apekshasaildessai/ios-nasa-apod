@@ -93,6 +93,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Njl-3J-g6D">
                                         <rect key="frame" x="212" y="0.0" width="202" height="78"/>
                                         <state key="normal" title="My Favorites"/>
+                                        <connections>
+                                            <action selector="myFavoriteButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KxP-9W-Z9W"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -110,18 +113,51 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="mvH-3W-qhV" secondAttribute="bottom" constant="54" id="y3P-Kg-J54"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="O4o-d5-Gfx"/>
                     <connections>
                         <outlet property="apodImageView" destination="u4E-vc-145" id="I5p-ES-mbf"/>
                         <outlet property="datePicker" destination="5be-ci-6h4" id="ZBB-ls-xkI"/>
                         <outlet property="descriptionLabel" destination="X4T-1q-hyh" id="d3V-zw-mco"/>
                         <outlet property="favoriteButton" destination="rY3-Q9-mA0" id="W1K-zC-w6E"/>
                         <outlet property="imageViewHeightConstraint" destination="Vda-8l-Cue" id="OQ4-UJ-Uas"/>
+                        <outlet property="myFavoritesButton" destination="Njl-3J-g6D" id="HHV-xk-a99"/>
                         <outlet property="titleLabel" destination="sM2-89-5BU" id="oaG-2G-a3Q"/>
+                        <segue destination="YdY-0f-57h" kind="presentation" identifier="showFullImageSegue" id="2F8-E0-PLU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="137.68115942028987" y="73.660714285714278"/>
+        </scene>
+        <!--Full Image View Controller-->
+        <scene sceneID="10d-Aj-xcl">
+            <objects>
+                <viewController id="YdY-0f-57h" customClass="FullImageViewController" customModule="NASA_APOD" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="noL-pD-902">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MUN-N3-ia1" customClass="PanZoomImageView" customModule="NASA_APOD" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="24" width="414" height="784"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Rkw-6t-6Xm"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="MUN-N3-ia1" firstAttribute="leading" secondItem="Rkw-6t-6Xm" secondAttribute="leading" id="3Z4-3k-6vF"/>
+                            <constraint firstItem="MUN-N3-ia1" firstAttribute="trailing" secondItem="Rkw-6t-6Xm" secondAttribute="trailing" id="e0J-G9-Mra"/>
+                            <constraint firstItem="MUN-N3-ia1" firstAttribute="top" secondItem="Rkw-6t-6Xm" secondAttribute="top" constant="24" id="l1z-NM-zgb"/>
+                            <constraint firstItem="MUN-N3-ia1" firstAttribute="bottom" secondItem="Rkw-6t-6Xm" secondAttribute="bottom" id="pzi-je-6bU"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="zoomImageView" destination="MUN-N3-ia1" id="V1L-mm-dds"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FTE-q9-Sxb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="882.60869565217399" y="73.660714285714278"/>
         </scene>
     </scenes>
     <resources>

@@ -19,6 +19,8 @@
 		DB4145FE27CA024900AFE5B6 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4145FD27CA024900AFE5B6 /* PersistenceController.swift */; };
 		DB41460227CA2BBE00AFE5B6 /* YearMonthDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB41460127CA2BBE00AFE5B6 /* YearMonthDay.swift */; };
 		DB41460427CA2C6C00AFE5B6 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB41460327CA2C6C00AFE5B6 /* Utilities.swift */; };
+		DB41460627CA9ED800AFE5B6 /* PanZoomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB41460527CA9ED800AFE5B6 /* PanZoomImageView.swift */; };
+		DB41460827CAA12D00AFE5B6 /* FullImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB41460727CAA12D00AFE5B6 /* FullImageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		DB4145FD27CA024900AFE5B6 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		DB41460127CA2BBE00AFE5B6 /* YearMonthDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearMonthDay.swift; sourceTree = "<group>"; };
 		DB41460327CA2C6C00AFE5B6 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		DB41460527CA9ED800AFE5B6 /* PanZoomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanZoomImageView.swift; sourceTree = "<group>"; };
+		DB41460727CAA12D00AFE5B6 /* FullImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +82,7 @@
 				DB4145EA27C986F200AFE5B6 /* Assets.xcassets */,
 				DB4145EC27C986F200AFE5B6 /* LaunchScreen.storyboard */,
 				DB4145EF27C986F200AFE5B6 /* Info.plist */,
+				DB41460727CAA12D00AFE5B6 /* FullImageViewController.swift */,
 			);
 			path = "NASA-APOD";
 			sourceTree = "<group>";
@@ -105,6 +110,7 @@
 			children = (
 				DB41460127CA2BBE00AFE5B6 /* YearMonthDay.swift */,
 				DB41460327CA2C6C00AFE5B6 /* Utilities.swift */,
+				DB41460527CA9ED800AFE5B6 /* PanZoomImageView.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -182,8 +188,10 @@
 				DB4145E627C986F100AFE5B6 /* ViewController.swift in Sources */,
 				DB4145FE27CA024900AFE5B6 /* PersistenceController.swift in Sources */,
 				DB41460227CA2BBE00AFE5B6 /* YearMonthDay.swift in Sources */,
+				DB41460827CAA12D00AFE5B6 /* FullImageViewController.swift in Sources */,
 				DB4145FC27C9FB9300AFE5B6 /* APOD.xcdatamodeld in Sources */,
 				DB4145E227C986F100AFE5B6 /* AppDelegate.swift in Sources */,
+				DB41460627CA9ED800AFE5B6 /* PanZoomImageView.swift in Sources */,
 				DB4145F627C9A49E00AFE5B6 /* Network.swift in Sources */,
 				DB41460427CA2C6C00AFE5B6 /* Utilities.swift in Sources */,
 				DB4145E427C986F100AFE5B6 /* SceneDelegate.swift in Sources */,

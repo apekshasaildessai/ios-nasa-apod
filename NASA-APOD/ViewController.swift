@@ -19,15 +19,16 @@ class ViewController: UIViewController {
     @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
     let networkManager =  Network()
     var managedObjectContext: NSManagedObjectContext?
+    var currentAPOD: APODEntity?
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        addTapGestureToImageView()
         managedObjectContext = PersistenceController.shared.container.viewContext
         fetchAPODFor(date: YearMonthDay.today.description)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        datePicker.isHidden = true
     }
     func fetchAPODFor(date: String) {
         if let savedAPOD = self.fetchSavedAPODFor(day: date) {
@@ -43,6 +44,15 @@ class ViewController: UIViewController {
             }
         }
     }
+    //Storyboard methods
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showFullImageSegue" {
+            if let destinationVC = segue.destination as? FullImageViewController, let currentAPOD = currentAPOD {
+                destinationVC.imageUrl = currentAPOD.url
+                destinationVC.hdImageUrl = currentAPOD.hdUrl
+            }
+        }
+    }
     //UI methods
     @IBAction func datePickerChanged(_ sender: Any) {
         let yearMonthDay = YearMonthDay(localTime: datePicker.date)
@@ -52,7 +62,13 @@ class ViewController: UIViewController {
         
     }
     @IBAction func myFavoriteButtonTapped(_ sender: Any) {
-        
+       
+    }
+    func addTapGestureToImageView() {
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapOnImageView(_:)))
+        tapRecognizer.numberOfTapsRequired = 1
+        apodImageView.isUserInteractionEnabled = true
+        apodImageView.addGestureRecognizer(tapRecognizer)
     }
     func showHideDatePickerWithDate(date: Date?) {
         if let givenDate = date {
@@ -60,7 +76,11 @@ class ViewController: UIViewController {
         }
         datePicker.isHidden = !datePicker.isHidden
     }
+    @objc private func didTapOnImageView(_ sender: UITapGestureRecognizer) {
+        performSegue(withIdentifier: "showFullImageSegue", sender: nil)
+    }
     func updateAPODDetails(apodItem: APODEntity) {
+        currentAPOD = apodItem
         titleLabel.text = apodItem.title
         descriptionLabel.text = apodItem.explanation
         loadImageData(apodItem: apodItem)
