@@ -68,7 +68,7 @@ extension MyFavoritesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let apodEntity = myFavoriteAPODs[indexPath.row]
         //Set value in APODViewController
-        if let apodViewController = navigationController?.viewControllers.first as? ViewController {
+        if let apodViewController = navigationController?.viewControllers.first as? APODViewController {
             apodViewController.updateCurrentPOD(date: apodEntity.date!)
         }
         //pop to apodViewController

@@ -29,7 +29,7 @@ class FullImageViewController: UIViewController {
     }
     //UI methods
     @IBAction func backButtonTapped(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popViewController(animated: false)
     }
     func loadImageData(imageUrl: String) {
         guard let url = URL(string: imageUrl)else {

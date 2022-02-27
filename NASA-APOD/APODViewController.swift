@@ -7,8 +7,9 @@
 
 import UIKit
 import CoreData
+import AVKit
 
-class ViewController: UIViewController {
+class APODViewController: UIViewController {
   
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var apodImageView: UIImageView!
@@ -20,6 +21,7 @@ class ViewController: UIViewController {
     let networkManager =  Network()
     var apodDataLoader: ApodDataLoader?
     var currentAPOD: APODEntity?
+    var newDatePicker: UIDatePicker?
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -73,6 +75,8 @@ class ViewController: UIViewController {
     @IBAction func myFavoriteButtonTapped(_ sender: Any) {
         performSegue(withIdentifier: "showMyFavoritesView", sender: nil)
 //        let myFavorite = apodDataLoader?.fetchMyFavoriteAPODs()
+        
+//        showDatePicker()
     }
     func addTapGestureToImageView() {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapOnImageView(_:)))
@@ -87,7 +91,18 @@ class ViewController: UIViewController {
         datePicker.isHidden = !datePicker.isHidden
     }
     @objc private func didTapOnImageView(_ sender: UITapGestureRecognizer) {
-        performSegue(withIdentifier: "showFullImageSegue", sender: nil)
+        guard let apodEntity = currentAPOD else {
+            return
+        }
+        let mediaType = getMediaTypeFor(apodEntity: apodEntity)
+        switch mediaType {
+        case .image:
+            performSegue(withIdentifier: "showFullImageSegue", sender: nil)
+        case .video:
+            showVideoView()
+        default:
+            return
+        }
     }
     func updateAPODDetails(apodItem: APODEntity) {
         currentAPOD = apodItem
@@ -101,6 +116,7 @@ class ViewController: UIViewController {
         let yearMonthDay = YearMonthDay(currentAPOD!.date!)
         datePicker.date = yearMonthDay!.asDate()!
     }
+    
     
     func loadImageData(apodItem: APODEntity) {
         guard let urlString = apodItem.url else {
@@ -144,8 +160,58 @@ class ViewController: UIViewController {
             }
         }
     }
+    func showVideoView() {
+        guard let url = URL(string: currentAPOD?.url ?? "")else {return}
+        let player = AVPlayer(url: url)
+        let vc = AVPlayerViewController()
+        vc.player = player
+
+        present(vc, animated: true) {
+            vc.player?.play()
+        }
+    }
     func updateCurrentPOD(date: String)  {
         fetchAPODFor(date: date)
     }
+    //Utility method
+    func getMediaTypeFor(apodEntity: APODEntity) -> APODMediaType {
+        guard let mediaType = currentAPOD?.mediaType else {
+            return APODMediaType.unknown
+        }
+        if let apodMediaType = APODMediaType.init(rawValue: mediaType) {
+            return apodMediaType
+        }
+        return APODMediaType.unknown
+    }
+    
+    func showDatePicker() {
+        newDatePicker = UIDatePicker()
+        newDatePicker?.date = Date()
+        newDatePicker?.locale = .current
+        newDatePicker?.preferredDatePickerStyle = .inline
+//            newDatePicker?.addTarget(self, action: #selector(dateSet), for: .valueChanged)
+            addDatePickerToSubview()
+        }
+
+        func addDatePickerToSubview() {
+            guard let datePicker = newDatePicker else { return }
+            // Give the background Blur Effect
+            let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.regular)
+            let blurEffectView = UIVisualEffectView(effect: blurEffect)
+            blurEffectView.frame = self.view.bounds
+            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            self.view.addSubview(blurEffectView)
+            self.view.addSubview(datePicker)
+            datePicker.translatesAutoresizingMaskIntoConstraints = false
+            centerDatePicker()
+            view.bringSubviewToFront(datePicker)
+        }
+
+        func centerDatePicker() {
+            guard let datePicker = newDatePicker else { return }
+            // Center the Date Picker
+            datePicker.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+            datePicker.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        }
 }
 

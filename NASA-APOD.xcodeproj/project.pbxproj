@@ -11,7 +11,7 @@
 		DB3973AB27CABB6500448035 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3973AA27CABB6500448035 /* ImageCollectionViewCell.swift */; };
 		DB4145E227C986F100AFE5B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4145E127C986F100AFE5B6 /* AppDelegate.swift */; };
 		DB4145E427C986F100AFE5B6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4145E327C986F100AFE5B6 /* SceneDelegate.swift */; };
-		DB4145E627C986F100AFE5B6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4145E527C986F100AFE5B6 /* ViewController.swift */; };
+		DB4145E627C986F100AFE5B6 /* APODViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4145E527C986F100AFE5B6 /* APODViewController.swift */; };
 		DB4145E927C986F100AFE5B6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB4145E727C986F100AFE5B6 /* Main.storyboard */; };
 		DB4145EB27C986F200AFE5B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB4145EA27C986F200AFE5B6 /* Assets.xcassets */; };
 		DB4145EE27C986F200AFE5B6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB4145EC27C986F200AFE5B6 /* LaunchScreen.storyboard */; };
@@ -32,7 +32,7 @@
 		DB4145DE27C986F100AFE5B6 /* NASA-APOD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NASA-APOD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB4145E127C986F100AFE5B6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DB4145E327C986F100AFE5B6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		DB4145E527C986F100AFE5B6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DB4145E527C986F100AFE5B6 /* APODViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODViewController.swift; sourceTree = "<group>"; };
 		DB4145E827C986F100AFE5B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DB4145EA27C986F200AFE5B6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DB4145ED27C986F200AFE5B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -83,7 +83,7 @@
 				DB4145F927C9FB5100AFE5B6 /* Database */,
 				DB4145E127C986F100AFE5B6 /* AppDelegate.swift */,
 				DB4145E327C986F100AFE5B6 /* SceneDelegate.swift */,
-				DB4145E527C986F100AFE5B6 /* ViewController.swift */,
+				DB4145E527C986F100AFE5B6 /* APODViewController.swift */,
 				DB4145E727C986F100AFE5B6 /* Main.storyboard */,
 				DB4145EA27C986F200AFE5B6 /* Assets.xcassets */,
 				DB4145EC27C986F200AFE5B6 /* LaunchScreen.storyboard */,
@@ -194,7 +194,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB4145E627C986F100AFE5B6 /* ViewController.swift in Sources */,
+				DB4145E627C986F100AFE5B6 /* APODViewController.swift in Sources */,
 				DB4145FE27CA024900AFE5B6 /* PersistenceController.swift in Sources */,
 				DB41460227CA2BBE00AFE5B6 /* YearMonthDay.swift in Sources */,
 				DB41460827CAA12D00AFE5B6 /* FullImageViewController.swift in Sources */,

@@ -25,7 +25,7 @@ struct ApodDataLoader {
         apodEntity.url = apodItem.url
         apodEntity.hdUrl = apodItem.hdurl
         apodEntity.title = apodItem.title
-        apodEntity.mediaType = apodEntity.mediaType
+        apodEntity.mediaType = apodItem.media_type
         
         PersistenceController.shared.save()
         return apodEntity

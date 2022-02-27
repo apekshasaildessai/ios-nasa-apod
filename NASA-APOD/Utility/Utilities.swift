@@ -17,3 +17,8 @@ public enum APODErrors: Error {
   case unsupportedAsset
   case fileCoordinationFailed
 }
+public enum APODMediaType: String {
+    case video = "video"
+    case image = "image"
+    case unknown = "unknown"
+}
