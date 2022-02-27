@@ -7,12 +7,14 @@
 
 import Foundation
 import UIKit
+
 class FullImageViewController: UIViewController {
     //IBoutlets
     @IBOutlet weak var zoomImageView: PanZoomImageView!
     @IBOutlet weak var backButton: UIButton!
     var imageUrl: String?
     var hdImageUrl: String?
+    var videoUrl: String?
     var name: String?
     let networkManager = Network()
     override func viewWillAppear(_ animated: Bool) {

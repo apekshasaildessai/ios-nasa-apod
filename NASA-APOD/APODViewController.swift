@@ -142,7 +142,10 @@ class APODViewController: UIViewController {
         }
         apodImageView.image = image
         let ratio = image.size.width / image.size.height
-        let newHeight = apodImageView.frame.width / ratio
+        var newHeight = apodImageView.frame.width / ratio
+        if newHeight > maxImageViewHeight() {
+            newHeight = maxImageViewHeight()
+        }
         imageViewHeightConstraint.constant = newHeight
         view.layoutIfNeeded()
     }
@@ -183,35 +186,39 @@ class APODViewController: UIViewController {
         }
         return APODMediaType.unknown
     }
+    func maxImageViewHeight() -> CGFloat {
+        let availableHeight = view.frame.height - apodImageView.frame.origin.y
+        return availableHeight - 200
+    }
     
-    func showDatePicker() {
-        newDatePicker = UIDatePicker()
-        newDatePicker?.date = Date()
-        newDatePicker?.locale = .current
-        newDatePicker?.preferredDatePickerStyle = .inline
-//            newDatePicker?.addTarget(self, action: #selector(dateSet), for: .valueChanged)
-            addDatePickerToSubview()
-        }
-
-        func addDatePickerToSubview() {
-            guard let datePicker = newDatePicker else { return }
-            // Give the background Blur Effect
-            let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.regular)
-            let blurEffectView = UIVisualEffectView(effect: blurEffect)
-            blurEffectView.frame = self.view.bounds
-            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            self.view.addSubview(blurEffectView)
-            self.view.addSubview(datePicker)
-            datePicker.translatesAutoresizingMaskIntoConstraints = false
-            centerDatePicker()
-            view.bringSubviewToFront(datePicker)
-        }
-
-        func centerDatePicker() {
-            guard let datePicker = newDatePicker else { return }
-            // Center the Date Picker
-            datePicker.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
-            datePicker.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        }
+//    func showDatePicker() {
+//        newDatePicker = UIDatePicker()
+//        newDatePicker?.date = Date()
+//        newDatePicker?.locale = .current
+//        newDatePicker?.preferredDatePickerStyle = .inline
+////            newDatePicker?.addTarget(self, action: #selector(dateSet), for: .valueChanged)
+//            addDatePickerToSubview()
+//        }
+//
+//        func addDatePickerToSubview() {
+//            guard let datePicker = newDatePicker else { return }
+//            // Give the background Blur Effect
+//            let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.regular)
+//            let blurEffectView = UIVisualEffectView(effect: blurEffect)
+//            blurEffectView.frame = self.view.bounds
+//            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//            self.view.addSubview(blurEffectView)
+//            self.view.addSubview(datePicker)
+//            datePicker.translatesAutoresizingMaskIntoConstraints = false
+//            centerDatePicker()
+//            view.bringSubviewToFront(datePicker)
+//        }
+//
+//        func centerDatePicker() {
+//            guard let datePicker = newDatePicker else { return }
+//            // Center the Date Picker
+//            datePicker.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+//            datePicker.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+//        }
 }
 
