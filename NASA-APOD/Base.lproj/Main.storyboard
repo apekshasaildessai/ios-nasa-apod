@@ -142,6 +142,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="90J-eI-Hzu" customClass="YTPlayerView">
+                                <rect key="frame" x="0.0" y="331.5" width="414" height="233"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="90J-eI-Hzu" secondAttribute="height" multiplier="16:9" id="RKv-dq-gs9"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MUN-N3-ia1" customClass="PanZoomImageView" customModule="NASA_APOD" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="112" width="414" height="722"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -174,15 +181,20 @@
                             <constraint firstItem="MUN-N3-ia1" firstAttribute="leading" secondItem="Rkw-6t-6Xm" secondAttribute="leading" id="3Z4-3k-6vF"/>
                             <constraint firstItem="Rkw-6t-6Xm" firstAttribute="trailing" secondItem="6c6-vu-JQc" secondAttribute="trailing" constant="20" id="3dJ-ok-zAg"/>
                             <constraint firstItem="Rkw-6t-6Xm" firstAttribute="bottom" secondItem="6c6-vu-JQc" secondAttribute="bottom" constant="6" id="5t5-E8-BU5"/>
+                            <constraint firstItem="90J-eI-Hzu" firstAttribute="leading" secondItem="Rkw-6t-6Xm" secondAttribute="leading" id="C65-Dc-n4O"/>
                             <constraint firstItem="6c6-vu-JQc" firstAttribute="top" secondItem="MUN-N3-ia1" secondAttribute="bottom" id="XbG-HR-9tw"/>
                             <constraint firstItem="MUN-N3-ia1" firstAttribute="trailing" secondItem="Rkw-6t-6Xm" secondAttribute="trailing" id="e0J-G9-Mra"/>
+                            <constraint firstItem="90J-eI-Hzu" firstAttribute="centerY" secondItem="noL-pD-902" secondAttribute="centerY" id="f7J-aj-aC5"/>
+                            <constraint firstItem="90J-eI-Hzu" firstAttribute="width" secondItem="noL-pD-902" secondAttribute="width" id="gdM-S8-9m6"/>
                             <constraint firstItem="MUN-N3-ia1" firstAttribute="top" secondItem="Rkw-6t-6Xm" secondAttribute="top" constant="24" id="l1z-NM-zgb"/>
+                            <constraint firstItem="Rkw-6t-6Xm" firstAttribute="trailing" secondItem="90J-eI-Hzu" secondAttribute="trailing" id="onI-wI-Mbm"/>
                             <constraint firstItem="6c6-vu-JQc" firstAttribute="leading" secondItem="Rkw-6t-6Xm" secondAttribute="leading" constant="20" id="vTW-cH-lZx"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="wbz-QS-6tZ"/>
                     <connections>
                         <outlet property="backButton" destination="QyV-4P-xa1" id="c72-ab-AQc"/>
+                        <outlet property="videoPlayerView" destination="90J-eI-Hzu" id="nc9-rf-DLi"/>
                         <outlet property="zoomImageView" destination="MUN-N3-ia1" id="V1L-mm-dds"/>
                     </connections>
                 </viewController>

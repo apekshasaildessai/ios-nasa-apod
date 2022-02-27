@@ -3,12 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		DB3973A927CAB59E00448035 /* MyFavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3973A827CAB59E00448035 /* MyFavoritesViewController.swift */; };
 		DB3973AB27CABB6500448035 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3973AA27CABB6500448035 /* ImageCollectionViewCell.swift */; };
+		DB3973B227CB1C4100448035 /* Assets.bundle in Frameworks */ = {isa = PBXBuildFile; fileRef = DB3973B127CB1C4100448035 /* Assets.bundle */; };
+		DB3973B527CB1E3D00448035 /* YouTubeiOSPlayerHelper in Frameworks */ = {isa = PBXBuildFile; productRef = DB3973B427CB1E3D00448035 /* YouTubeiOSPlayerHelper */; };
 		DB4145E227C986F100AFE5B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4145E127C986F100AFE5B6 /* AppDelegate.swift */; };
 		DB4145E427C986F100AFE5B6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4145E327C986F100AFE5B6 /* SceneDelegate.swift */; };
 		DB4145E627C986F100AFE5B6 /* APODViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4145E527C986F100AFE5B6 /* APODViewController.swift */; };
@@ -29,6 +31,7 @@
 /* Begin PBXFileReference section */
 		DB3973A827CAB59E00448035 /* MyFavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFavoritesViewController.swift; sourceTree = "<group>"; };
 		DB3973AA27CABB6500448035 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		DB3973B127CB1C4100448035 /* Assets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Assets.bundle; path = "NASA-APOD/youtube-ios-player-helper/youtube-ios-player-helper/Assets.bundle"; sourceTree = "<group>"; };
 		DB4145DE27C986F100AFE5B6 /* NASA-APOD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NASA-APOD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB4145E127C986F100AFE5B6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DB4145E327C986F100AFE5B6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -53,17 +56,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB3973B227CB1C4100448035 /* Assets.bundle in Frameworks */,
+				DB3973B527CB1E3D00448035 /* YouTubeiOSPlayerHelper in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DB3973B027CB1C4100448035 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DB3973B127CB1C4100448035 /* Assets.bundle */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DB4145D527C986F000AFE5B6 = {
 			isa = PBXGroup;
 			children = (
 				DB4145E027C986F100AFE5B6 /* NASA-APOD */,
 				DB4145DF27C986F100AFE5B6 /* Products */,
+				DB3973B027CB1C4100448035 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -140,6 +154,9 @@
 			dependencies = (
 			);
 			name = "NASA-APOD";
+			packageProductDependencies = (
+				DB3973B427CB1E3D00448035 /* YouTubeiOSPlayerHelper */,
+			);
 			productName = "NASA-APOD";
 			productReference = DB4145DE27C986F100AFE5B6 /* NASA-APOD.app */;
 			productType = "com.apple.product-type.application";
@@ -167,6 +184,9 @@
 				Base,
 			);
 			mainGroup = DB4145D527C986F000AFE5B6;
+			packageReferences = (
+				DB3973B327CB1E3D00448035 /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */,
+			);
 			productRefGroup = DB4145DF27C986F100AFE5B6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -407,6 +427,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DB3973B327CB1E3D00448035 /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/youtube/youtube-ios-player-helper.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.0.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DB3973B427CB1E3D00448035 /* YouTubeiOSPlayerHelper */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DB3973B327CB1E3D00448035 /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */;
+			productName = YouTubeiOSPlayerHelper;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		DB4145FA27C9FB9300AFE5B6 /* APOD.xcdatamodeld */ = {

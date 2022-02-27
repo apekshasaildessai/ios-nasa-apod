@@ -7,7 +7,6 @@
 
 import UIKit
 import CoreData
-import AVKit
 
 class APODViewController: UIViewController {
   
@@ -53,8 +52,12 @@ class APODViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showFullImageSegue" {
             if let destinationVC = segue.destination as? FullImageViewController, let currentAPOD = currentAPOD {
-                destinationVC.imageUrl = currentAPOD.url
-                destinationVC.hdImageUrl = currentAPOD.hdUrl
+                if getMediaTypeFor(apodEntity: currentAPOD) == .image {
+                    destinationVC.imageUrl = currentAPOD.url
+                    destinationVC.hdImageUrl = currentAPOD.hdUrl
+                } else {
+                    destinationVC.videoUrl = currentAPOD.url
+                }
                 destinationVC.name = currentAPOD.title
             }
         }
@@ -94,15 +97,7 @@ class APODViewController: UIViewController {
         guard let apodEntity = currentAPOD else {
             return
         }
-        let mediaType = getMediaTypeFor(apodEntity: apodEntity)
-        switch mediaType {
-        case .image:
-            performSegue(withIdentifier: "showFullImageSegue", sender: nil)
-        case .video:
-            showVideoView()
-        default:
-            return
-        }
+        performSegue(withIdentifier: "showFullImageSegue", sender: nil)
     }
     func updateAPODDetails(apodItem: APODEntity) {
         currentAPOD = apodItem
@@ -161,16 +156,6 @@ class APODViewController: UIViewController {
             if image != nil {
                 favoriteButton.setImage(image, for: .normal)
             }
-        }
-    }
-    func showVideoView() {
-        guard let url = URL(string: currentAPOD?.url ?? "")else {return}
-        let player = AVPlayer(url: url)
-        let vc = AVPlayerViewController()
-        vc.player = player
-
-        present(vc, animated: true) {
-            vc.player?.play()
         }
     }
     func updateCurrentPOD(date: String)  {
