@@ -17,6 +17,7 @@ class APODViewController: UIViewController {
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var myFavoritesButton: UIButton!
     @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var playImageView: UIImageView!
     let networkManager =  Network()
     var apodDataLoader: ApodDataLoader?
     var currentAPOD: APODEntity?
@@ -94,9 +95,6 @@ class APODViewController: UIViewController {
         datePicker.isHidden = !datePicker.isHidden
     }
     @objc private func didTapOnImageView(_ sender: UITapGestureRecognizer) {
-        guard let apodEntity = currentAPOD else {
-            return
-        }
         performSegue(withIdentifier: "showFullImageSegue", sender: nil)
     }
     func updateAPODDetails(apodItem: APODEntity) {
@@ -104,20 +102,29 @@ class APODViewController: UIViewController {
         titleLabel.text = apodItem.title
         descriptionLabel.text = apodItem.explanation
         updateFavoriteButton()
-        loadImageData(apodItem: apodItem)
+        updateImage(apodItem: apodItem)
         
         //Update Date on picker
         //TODO: remove force unwrapping
         let yearMonthDay = YearMonthDay(currentAPOD!.date!)
         datePicker.date = yearMonthDay!.asDate()!
     }
-    
-    
-    func loadImageData(apodItem: APODEntity) {
-        guard let urlString = apodItem.url else {
-            print("Invalid url...")
-            return
+
+    func updateImage(apodItem: APODEntity) {
+        if let thumbnailUrl = getThumbnailUrl(apodEntity: apodItem) {
+            downloadImageData(urlString: thumbnailUrl)
         }
+        let mediaType = getMediaTypeFor(apodEntity: apodItem)
+        switch mediaType {
+        case .image:
+            playImageView.isHidden = true
+        case .video:
+            playImageView.isHidden = false
+        default:
+            playImageView.isHidden = true
+        }
+    }
+    func downloadImageData(urlString: String) {
         guard let url = URL(string: urlString)else {
             print("Invalid url...")
             return
@@ -127,7 +134,6 @@ class APODViewController: UIViewController {
                 DispatchQueue.main.async {
                     self?.updateImage(data: data!)
                 }
-               
             }
         }
     }
@@ -175,7 +181,18 @@ class APODViewController: UIViewController {
         let availableHeight = view.frame.height - apodImageView.frame.origin.y
         return availableHeight - 200
     }
-    
+    func getThumbnailUrl(apodEntity: APODEntity) -> String? {
+        let apodMediaType = getMediaTypeFor(apodEntity: apodEntity)
+        switch apodMediaType {
+        case .image:
+            return apodEntity.url
+        case .video:
+            return apodEntity.thumbnail
+        default:
+            return nil
+        }
+    }
+
 //    func showDatePicker() {
 //        newDatePicker = UIDatePicker()
 //        newDatePicker?.date = Date()

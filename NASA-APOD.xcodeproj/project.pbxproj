@@ -11,6 +11,7 @@
 		DB3973AB27CABB6500448035 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3973AA27CABB6500448035 /* ImageCollectionViewCell.swift */; };
 		DB3973B227CB1C4100448035 /* Assets.bundle in Frameworks */ = {isa = PBXBuildFile; fileRef = DB3973B127CB1C4100448035 /* Assets.bundle */; };
 		DB3973B527CB1E3D00448035 /* YouTubeiOSPlayerHelper in Frameworks */ = {isa = PBXBuildFile; productRef = DB3973B427CB1E3D00448035 /* YouTubeiOSPlayerHelper */; };
+		DB3973B727CB40A800448035 /* MediaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3973B627CB40A800448035 /* MediaData.swift */; };
 		DB4145E227C986F100AFE5B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4145E127C986F100AFE5B6 /* AppDelegate.swift */; };
 		DB4145E427C986F100AFE5B6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4145E327C986F100AFE5B6 /* SceneDelegate.swift */; };
 		DB4145E627C986F100AFE5B6 /* APODViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4145E527C986F100AFE5B6 /* APODViewController.swift */; };
@@ -32,6 +33,7 @@
 		DB3973A827CAB59E00448035 /* MyFavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFavoritesViewController.swift; sourceTree = "<group>"; };
 		DB3973AA27CABB6500448035 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		DB3973B127CB1C4100448035 /* Assets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Assets.bundle; path = "NASA-APOD/youtube-ios-player-helper/youtube-ios-player-helper/Assets.bundle"; sourceTree = "<group>"; };
+		DB3973B627CB40A800448035 /* MediaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaData.swift; sourceTree = "<group>"; };
 		DB4145DE27C986F100AFE5B6 /* NASA-APOD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NASA-APOD.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB4145E127C986F100AFE5B6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DB4145E327C986F100AFE5B6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 				DB41460127CA2BBE00AFE5B6 /* YearMonthDay.swift */,
 				DB41460327CA2C6C00AFE5B6 /* Utilities.swift */,
 				DB41460527CA9ED800AFE5B6 /* PanZoomImageView.swift */,
+				DB3973B627CB40A800448035 /* MediaData.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -215,6 +218,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB4145E627C986F100AFE5B6 /* APODViewController.swift in Sources */,
+				DB3973B727CB40A800448035 /* MediaData.swift in Sources */,
 				DB4145FE27CA024900AFE5B6 /* PersistenceController.swift in Sources */,
 				DB41460227CA2BBE00AFE5B6 /* YearMonthDay.swift in Sources */,
 				DB41460827CAA12D00AFE5B6 /* FullImageViewController.swift in Sources */,
