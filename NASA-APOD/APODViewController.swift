@@ -21,7 +21,7 @@ class APODViewController: UIViewController {
     let networkManager =  Network()
     var apodDataLoader: ApodDataLoader?
     var currentAPOD: APODEntity?
-    var newDatePicker: UIDatePicker?
+    var customSpinnerView : UIView?
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -31,11 +31,13 @@ class APODViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setupView()
         if currentAPOD != nil {
             updateAPODDetails(apodItem: currentAPOD!)
         }
     }
     func fetchAPODFor(date: String) {
+        showLoadingView()
         if let savedAPOD = self.apodDataLoader?.fetchSavedAPODFor(day: date) {
             updateAPODDetails(apodItem: savedAPOD)
             return
@@ -82,6 +84,23 @@ class APODViewController: UIViewController {
         
 //        showDatePicker()
     }
+    func setupView() {
+        //addNavBarImage()
+        self.navigationItem.title = "Astronomy Picture of the Day"
+        self.navigationItem.prompt = "Today's"
+    }
+    func addNavBarImage() {
+        let navController = navigationController!
+        let image = UIImage(systemName: "star") //Your logo url here
+        let imageView = UIImageView(image: image)
+        let bannerWidth = navController.navigationBar.frame.size.width
+        let bannerHeight = navController.navigationBar.frame.size.height
+        let bannerX = bannerWidth / 2 - (image?.size.width)! / 2
+        let bannerY = bannerHeight / 2 - (image?.size.height)! / 2
+        imageView.frame = CGRect(x: bannerX, y: bannerY, width: bannerWidth, height: bannerHeight)
+        imageView.contentMode = .scaleAspectFit
+        navigationItem.titleView = imageView
+    }
     func addTapGestureToImageView() {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapOnImageView(_:)))
         tapRecognizer.numberOfTapsRequired = 1
@@ -98,6 +117,7 @@ class APODViewController: UIViewController {
         performSegue(withIdentifier: "showFullImageSegue", sender: nil)
     }
     func updateAPODDetails(apodItem: APODEntity) {
+        removeLoadingView()
         currentAPOD = apodItem
         titleLabel.text = apodItem.title
         descriptionLabel.text = apodItem.explanation
@@ -223,4 +243,20 @@ class APODViewController: UIViewController {
 //            datePicker.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
 //        }
 }
+extension APODViewController {
+    func showLoadingView () {
+        let loadingVC = LoadingViewController()
 
+        // Animate loadingVC over the existing views on screen
+        loadingVC.modalPresentationStyle = .overCurrentContext
+
+        // Animate loadingVC with a fade in animation
+        loadingVC.modalTransitionStyle = .crossDissolve
+               
+        present(loadingVC, animated: true, completion: nil)
+    }
+    
+    func removeLoadingView () {
+        self.dismiss(animated: false, completion: nil)
+    }
+}

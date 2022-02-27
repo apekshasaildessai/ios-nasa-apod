@@ -20,10 +20,20 @@ class FullImageViewController: UIViewController {
     var videoUrl: String?
     var name: String?
     let networkManager = Network()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        loadMedia()
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.setHidesBackButton(true, animated: false)
         self.title = name
+    }
+    //UI methods
+    @IBAction func backButtonTapped(_ sender: Any) {
+        self.navigationController?.popViewController(animated: false)
+    }
+    func loadMedia() {
         if imageUrl != nil {
             zoomImageView.isHidden = false
             videoPlayerView.isHidden = true
@@ -37,15 +47,8 @@ class FullImageViewController: UIViewController {
         if videoUrl != nil {
             zoomImageView.isHidden = true
             videoPlayerView.isHidden = false
-            view.bringSubviewToFront(videoPlayerView)
-            videoPlayerView.backgroundColor = UIColor.red
             playVideo(url: videoUrl!)
         }
-        
-    }
-    //UI methods
-    @IBAction func backButtonTapped(_ sender: Any) {
-        self.navigationController?.popViewController(animated: false)
     }
     func loadImageData(imageUrl: String) {
         guard let url = URL(string: imageUrl)else {
@@ -65,9 +68,7 @@ class FullImageViewController: UIViewController {
         if let match = youtubeRegex.firstMatch(in: url, range: NSRange(url.startIndex..<url.endIndex, in: url)),
            let range = Range(match.range(at: 1), in: url) {
            let videoId = String(url[range])
-            
-          videoPlayerView.load(withVideoId: videoId)
-          
+           videoPlayerView.load(withVideoId: videoId)
         }
     }
 }

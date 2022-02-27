@@ -52,6 +52,7 @@ extension MyFavoritesViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dataCell", for: indexPath) as! ImageCollectionViewCell
         let apodEntity = myFavoriteAPODs[indexPath.row]
         cell.loadImageData(imageUrl: apodEntity.url ?? "")
+        cell.updateTitle(title: apodEntity.title ?? "")
         return cell
     }
     
@@ -60,7 +61,7 @@ extension MyFavoritesViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         //TODO: Calculate and return
-        return CGSize(width: 300, height: 300)
+        return CGSize(width: 150, height: 150)
 
     }
 }

@@ -10,7 +10,11 @@ import UIKit
 
 class ImageCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var itemImageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
     var networkManager = Network()
+    func updateTitle(title : String) {
+        titleLabel.text = title
+    }
     func loadImageData(imageUrl: String) {
         guard let url = URL(string: imageUrl)else {
             print("Invalid url...")
