@@ -29,18 +29,17 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="u4E-vc-145">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q8S-4C-7xO" customClass="APODPictureView" customModule="NASA_APOD" customModuleProvider="target">
+                                                <rect key="frame" x="20" y="79" width="374" height="590"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="590" id="JU3-17-zj7"/>
+                                                </constraints>
+                                            </view>
+                                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="u4E-vc-145">
                                                 <rect key="frame" x="20" y="79" width="374" height="587.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="587.5" id="Vda-8l-Cue"/>
-                                                </constraints>
-                                            </imageView>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play.rectangle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="tT3-9c-6lM">
-                                                <rect key="frame" x="182" y="349" width="50" height="47.5"/>
-                                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="dIE-73-fBg"/>
-                                                    <constraint firstAttribute="width" constant="50" id="ulr-Km-onn"/>
                                                 </constraints>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rY3-Q9-mA0">
@@ -65,19 +64,21 @@
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstItem="tT3-9c-6lM" firstAttribute="centerX" secondItem="u4E-vc-145" secondAttribute="centerX" id="5FY-aR-JII"/>
                                             <constraint firstItem="X4T-1q-hyh" firstAttribute="top" secondItem="u4E-vc-145" secondAttribute="bottom" constant="40" id="Asq-pH-w1o"/>
                                             <constraint firstAttribute="trailing" secondItem="sM2-89-5BU" secondAttribute="trailing" constant="20" id="Kpp-fI-hWm"/>
                                             <constraint firstItem="sM2-89-5BU" firstAttribute="leading" secondItem="0fe-UY-YfW" secondAttribute="leading" constant="20" id="LyA-PT-qsA"/>
-                                            <constraint firstItem="tT3-9c-6lM" firstAttribute="centerY" secondItem="u4E-vc-145" secondAttribute="centerY" id="VYF-gt-P84"/>
+                                            <constraint firstItem="rY3-Q9-mA0" firstAttribute="top" secondItem="Q8S-4C-7xO" secondAttribute="bottom" constant="7.5" id="VgK-jt-zae"/>
                                             <constraint firstItem="sM2-89-5BU" firstAttribute="top" secondItem="0fe-UY-YfW" secondAttribute="top" constant="20" id="byG-oZ-BO3"/>
                                             <constraint firstAttribute="trailing" secondItem="rY3-Q9-mA0" secondAttribute="trailing" constant="20" symbolic="YES" id="dh7-ZU-xM3"/>
                                             <constraint firstAttribute="bottom" secondItem="X4T-1q-hyh" secondAttribute="bottom" constant="20" id="etT-Hd-F7g"/>
+                                            <constraint firstItem="Q8S-4C-7xO" firstAttribute="leading" secondItem="0fe-UY-YfW" secondAttribute="leading" constant="20" symbolic="YES" id="hmY-5c-xFy"/>
                                             <constraint firstItem="rY3-Q9-mA0" firstAttribute="top" secondItem="u4E-vc-145" secondAttribute="bottom" constant="10" id="iGj-NA-iTa"/>
                                             <constraint firstItem="u4E-vc-145" firstAttribute="top" secondItem="sM2-89-5BU" secondAttribute="bottom" constant="35" id="izC-O2-sR3"/>
                                             <constraint firstAttribute="trailing" secondItem="X4T-1q-hyh" secondAttribute="trailing" constant="20" id="k4j-Jt-maT"/>
+                                            <constraint firstAttribute="trailing" secondItem="Q8S-4C-7xO" secondAttribute="trailing" constant="20" symbolic="YES" id="l11-C9-wvI"/>
                                             <constraint firstItem="u4E-vc-145" firstAttribute="leading" secondItem="0fe-UY-YfW" secondAttribute="leading" constant="20" id="lVI-rZ-JA7"/>
                                             <constraint firstAttribute="trailing" secondItem="u4E-vc-145" secondAttribute="trailing" constant="20" id="oWF-q9-gLJ"/>
+                                            <constraint firstItem="Q8S-4C-7xO" firstAttribute="top" secondItem="sM2-89-5BU" secondAttribute="bottom" constant="35" id="s7U-YZ-2Fo"/>
                                             <constraint firstItem="X4T-1q-hyh" firstAttribute="leading" secondItem="0fe-UY-YfW" secondAttribute="leading" constant="20" id="uFg-AZ-b1h"/>
                                         </constraints>
                                     </view>
@@ -130,13 +131,12 @@
                     </view>
                     <navigationItem key="navigationItem" title="Astronomy Picture of the Day" largeTitleDisplayMode="always" id="O4o-d5-Gfx"/>
                     <connections>
-                        <outlet property="apodImageView" destination="u4E-vc-145" id="I5p-ES-mbf"/>
+                        <outlet property="apodPictureView" destination="Q8S-4C-7xO" id="pJX-np-0M6"/>
                         <outlet property="dateTextField" destination="fbg-qa-lpf" id="h9V-hI-AMp"/>
                         <outlet property="descriptionLabel" destination="X4T-1q-hyh" id="d3V-zw-mco"/>
                         <outlet property="favoriteButton" destination="rY3-Q9-mA0" id="W1K-zC-w6E"/>
-                        <outlet property="imageViewHeightConstraint" destination="Vda-8l-Cue" id="OQ4-UJ-Uas"/>
+                        <outlet property="imageViewHeightConstraint" destination="JU3-17-zj7" id="jn5-Yo-g30"/>
                         <outlet property="myFavoritesButton" destination="Njl-3J-g6D" id="HHV-xk-a99"/>
-                        <outlet property="playImageView" destination="tT3-9c-6lM" id="FJm-ox-Yoo"/>
                         <outlet property="titleLabel" destination="sM2-89-5BU" id="oaG-2G-a3Q"/>
                         <segue destination="YdY-0f-57h" kind="show" identifier="showFullImageSegue" id="2F8-E0-PLU"/>
                         <segue destination="21E-7I-rPh" kind="show" identifier="showMyFavoritesView" id="r42-jL-Xmh"/>
@@ -341,7 +341,6 @@
     </scenes>
     <resources>
         <image name="arrow.backward" catalog="system" width="128" height="98"/>
-        <image name="play.rectangle.fill" catalog="system" width="128" height="93"/>
         <image name="star" catalog="system" width="128" height="116"/>
         <image name="star.square.fill" catalog="system" width="128" height="114"/>
         <systemColor name="systemBackgroundColor">

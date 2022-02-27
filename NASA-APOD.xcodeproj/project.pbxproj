@@ -28,6 +28,8 @@
 		DB41460627CA9ED800AFE5B6 /* PanZoomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB41460527CA9ED800AFE5B6 /* PanZoomImageView.swift */; };
 		DB41460827CAA12D00AFE5B6 /* FullImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB41460727CAA12D00AFE5B6 /* FullImageViewController.swift */; };
 		DB41460A27CAACB800AFE5B6 /* ApodDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB41460927CAACB800AFE5B6 /* ApodDataLoader.swift */; };
+		DB8BD77C27CC276F001A0291 /* APODPictureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB8BD77B27CC276F001A0291 /* APODPictureView.xib */; };
+		DB8BD77E27CC27DD001A0291 /* APODPictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8BD77D27CC27DD001A0291 /* APODPictureView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +55,8 @@
 		DB41460527CA9ED800AFE5B6 /* PanZoomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanZoomImageView.swift; sourceTree = "<group>"; };
 		DB41460727CAA12D00AFE5B6 /* FullImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageViewController.swift; sourceTree = "<group>"; };
 		DB41460927CAACB800AFE5B6 /* ApodDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApodDataLoader.swift; sourceTree = "<group>"; };
+		DB8BD77B27CC276F001A0291 /* APODPictureView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = APODPictureView.xib; sourceTree = "<group>"; };
+		DB8BD77D27CC27DD001A0291 /* APODPictureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODPictureView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +144,8 @@
 				DB41460527CA9ED800AFE5B6 /* PanZoomImageView.swift */,
 				DB3973B627CB40A800448035 /* MediaData.swift */,
 				DB3973B827CB559600448035 /* LoadingViewController.swift */,
+				DB8BD77B27CC276F001A0291 /* APODPictureView.xib */,
+				DB8BD77D27CC27DD001A0291 /* APODPictureView.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -207,6 +213,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB8BD77C27CC276F001A0291 /* APODPictureView.xib in Resources */,
 				DB4145EE27C986F200AFE5B6 /* LaunchScreen.storyboard in Resources */,
 				DB4145EB27C986F200AFE5B6 /* Assets.xcassets in Resources */,
 				DB4145E927C986F100AFE5B6 /* Main.storyboard in Resources */,
@@ -220,6 +227,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB8BD77E27CC27DD001A0291 /* APODPictureView.swift in Sources */,
 				DB4145E627C986F100AFE5B6 /* APODViewController.swift in Sources */,
 				DB3973B727CB40A800448035 /* MediaData.swift in Sources */,
 				DB4145FE27CA024900AFE5B6 /* PersistenceController.swift in Sources */,

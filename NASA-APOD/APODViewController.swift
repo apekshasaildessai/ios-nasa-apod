@@ -11,12 +11,11 @@ import CoreData
 class APODViewController: UIViewController {
   
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var apodImageView: UIImageView!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var myFavoritesButton: UIButton!
     @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var playImageView: UIImageView!
+    @IBOutlet weak var apodPictureView: APODPictureView!
     @IBOutlet weak var dateTextField: UITextField! {
         didSet {
             dateTextField.tintColor = UIColor.systemBlue
@@ -124,18 +123,10 @@ class APODViewController: UIViewController {
         navigationItem.titleView = imageView
     }
     func addTapGestureToImageView() {
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapOnImageView(_:)))
-        tapRecognizer.numberOfTapsRequired = 1
-        apodImageView.isUserInteractionEnabled = true
-        apodImageView.addGestureRecognizer(tapRecognizer)
+        apodPictureView.enableTapGestureWith(target: self, onTapAction: #selector(didTapOnImageView))
     }
-//    func showHideDatePickerWithDate(date: Date?) {
-//        if let givenDate = date {
-//            datePicker.date = givenDate
-//        }
-//        datePicker.isHidden = !datePicker.isHidden
-//    }
-    @objc private func didTapOnImageView(_ sender: UITapGestureRecognizer) {
+    @objc
+    func didTapOnImageView() {
         performSegue(withIdentifier: "showFullImageSegue", sender: nil)
     }
     func updateAPODDetails(apodItem: APODEntity) {
@@ -156,17 +147,18 @@ class APODViewController: UIViewController {
     }
 
     func updateImage(apodItem: APODEntity) {
+        apodPictureView.showLoadingImage = true
         if let thumbnailUrl = getThumbnailUrl(apodEntity: apodItem) {
             downloadImageData(urlString: thumbnailUrl)
         }
         let mediaType = getMediaTypeFor(apodEntity: apodItem)
         switch mediaType {
         case .image:
-            playImageView.isHidden = true
+            apodPictureView.shouldShowPlay = false
         case .video:
-            playImageView.isHidden = false
+            apodPictureView.shouldShowPlay = true
         default:
-            playImageView.isHidden = true
+            apodPictureView.shouldShowPlay = false
         }
     }
     func downloadImageData(urlString: String) {
@@ -175,20 +167,23 @@ class APODViewController: UIViewController {
             return
         }
         networkManager.loadImageData(url: url) { [weak self] data, error in
-            if data != nil {
-                DispatchQueue.main.async {
-                    self?.updateImage(data: data!)
-                }
+            DispatchQueue.main.async {
+                self?.updateImage(data: data)
             }
         }
     }
-    func updateImage(data: Data) {
-        guard let image = UIImage(data: data) else {
+    func updateImage(data: Data?) {
+        if data == nil {
+            apodPictureView.showErrorImage = true
             return
         }
-        apodImageView.image = image
+        guard let image = UIImage(data: data!) else {
+            apodPictureView.showErrorImage = true
+            return
+        }
+        apodPictureView.thumbailImage = image
         let ratio = image.size.width / image.size.height
-        var newHeight = apodImageView.frame.width / ratio
+        var newHeight = apodPictureView.frame.width / ratio
         if newHeight > maxImageViewHeight() {
             newHeight = maxImageViewHeight()
         }
@@ -223,7 +218,7 @@ class APODViewController: UIViewController {
         return APODMediaType.unknown
     }
     func maxImageViewHeight() -> CGFloat {
-        let availableHeight = view.frame.height - apodImageView.frame.origin.y
+        let availableHeight = view.frame.height - apodPictureView.frame.origin.y
         return availableHeight - 200
     }
     func getThumbnailUrl(apodEntity: APODEntity) -> String? {
