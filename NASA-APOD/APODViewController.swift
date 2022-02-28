@@ -8,6 +8,10 @@
 import UIKit
 import CoreData
 
+enum APODViewConstants {
+    static let minBottomSpace = 250.0
+}
+
 class APODViewController: UIViewController {
   
     @IBOutlet weak var titleLabel: UILabel!
@@ -16,6 +20,7 @@ class APODViewController: UIViewController {
     @IBOutlet weak var myFavoritesButton: UIButton!
     @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var apodPictureView: APODPictureView!
+    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var dateTextField: UITextField! {
         didSet {
             dateTextField.tintColor = UIColor.systemBlue
@@ -104,7 +109,7 @@ class APODViewController: UIViewController {
         if let datePickerView = self.dateTextField.inputView as? UIDatePicker {
             
             let yearMonthDay = YearMonthDay(localTime: datePickerView.date)
-            self.dateTextField.text = yearMonthDay.description
+            self.dateLabel.text = yearMonthDay.longDate
             self.dateTextField.resignFirstResponder()
             //Update POD
             fetchAPODFor(date: yearMonthDay.description)
@@ -141,7 +146,7 @@ class APODViewController: UIViewController {
         //TODO: remove force unwrapping
         if let date = currentAPOD?.date {
             let yearMonthDay = YearMonthDay(date)
-            dateTextField.text = " " + yearMonthDay!.description
+            dateLabel.text = yearMonthDay!.longDate
             dateTextField.resignFirstResponder()
         }
     }
@@ -219,7 +224,7 @@ class APODViewController: UIViewController {
     }
     func maxImageViewHeight() -> CGFloat {
         let availableHeight = view.frame.height - apodPictureView.frame.origin.y
-        return availableHeight - 200
+        return availableHeight - CGFloat(APODViewConstants.minBottomSpace)
     }
     func getThumbnailUrl(apodEntity: APODEntity) -> String? {
         let apodMediaType = getMediaTypeFor(apodEntity: apodEntity)

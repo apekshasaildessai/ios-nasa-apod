@@ -51,11 +51,10 @@ extension MyFavoritesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dataCell", for: indexPath) as! ImageCollectionViewCell
         let apodEntity = myFavoriteAPODs[indexPath.row]
-        cell.loadImageData(imageUrl: apodEntity.url ?? "")
+        cell.loadImageData(imageUrl: apodEntity.getThumbnailUrl() ?? "")
         cell.updateTitle(title: apodEntity.title ?? "")
         return cell
     }
-    
 }
 extension MyFavoritesViewController: UICollectionViewDelegateFlowLayout {
 

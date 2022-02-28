@@ -14,5 +14,26 @@ struct APODItem: Codable {
   var explanation: String?
   var media_type: String?
   var thumbnail_url: String?
+    
+}
+extension APODEntity {
+    func getMediaType() -> APODMediaType {
+          if let apodMediaType = APODMediaType.init(rawValue: mediaType ?? "") {
+              return apodMediaType
+          }
+          return APODMediaType.unknown
+    }
+   
+   func getThumbnailUrl() -> String? {
+      let apodMediaType = getMediaType()
+      switch apodMediaType {
+      case .image:
+          return url
+      case .video:
+          return thumbnail
+      default:
+          return nil
+      }
+   }
 }
 

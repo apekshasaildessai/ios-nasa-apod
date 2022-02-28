@@ -49,7 +49,15 @@ extension YearMonthDay: LosslessStringConvertible {
   public var description: String {
     String(format: "%04d-%02d-%02d", year, month, day)
   }
-
+  public var longDate: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        if let date = asDate() {
+            return dateFormatter.string(from: date)
+        } else {
+            return " "
+        }
+ }
   public init?(_ description: String) {
     let components = description.split(separator: "-")
     guard components.count == 3,

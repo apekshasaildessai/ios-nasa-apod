@@ -19,14 +19,14 @@ class APODPictureView: UIView {
     var showLoadingImage: Bool? {
         didSet {
             if showLoadingImage ?? false {
-                pictureImageView.image = UIImage(systemName: "star")
+                pictureImageView.image = UIImage(named: "image_loading")
             }
         }
     }
     var showErrorImage: Bool? {
         didSet {
             if showLoadingImage ?? false {
-                pictureImageView.image = UIImage(systemName: "heart")
+                pictureImageView.image = UIImage(named: "image_error")
             }
         }
     }
