@@ -58,8 +58,9 @@ extension MyFavoritesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyFavoriteViewConstants.favoriteCellIdentifier, for: indexPath) as! ImageCollectionViewCell
         let apodEntity = myFavoriteAPODs[indexPath.row]
-        cell.loadImageData(imageUrl: apodEntity.getThumbnailUrl() ?? "")
         cell.updateTitle(title: apodEntity.title ?? "Title")
+        let isVideo = apodEntity.getMediaType() == .video
+        cell.loadImageData(imageUrl: apodEntity.getThumbnailUrl() ?? "", shouldShowPlayButton: isVideo)
         return cell
     }
 }

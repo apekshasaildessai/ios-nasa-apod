@@ -18,6 +18,7 @@ class APODPictureView: UIView {
     @IBOutlet private weak var contentView: UIView!
     @IBOutlet private weak var playImageView: UIImageView!
     @IBOutlet private weak var pictureImageView: UIImageView!
+    var didUpdateImageHandler:  (() -> ())?
     var shouldShowPlayIcon = false {
         didSet {
             playImageView.isHidden = !shouldShowPlayIcon
@@ -27,6 +28,9 @@ class APODPictureView: UIView {
         didSet {
             if showLoadingImage ?? false {
                 pictureImageView.image = UIImage(named: APODPictureViewConstants.loadingImageName)
+                if let handler = didUpdateImageHandler {
+                    handler()
+                }
             }
         }
     }
@@ -34,20 +38,22 @@ class APODPictureView: UIView {
         didSet {
             if showErrorImage ?? false {
                 pictureImageView.image = UIImage(named: APODPictureViewConstants.errorImageName)
+                if let handler = didUpdateImageHandler {
+                    handler()
+                }
             }
         }
-    }
-    var thumbailImage: UIImage? {
-       get { return pictureImageView.image }
-       set { pictureImageView.image = newValue }
-    }
-    var hdImage: UIImage? {
-       get { return pictureImageView.image }
-       set { pictureImageView.image = newValue }
     }
     var currentImage: UIImage? {
        get { return pictureImageView.image }
        set { pictureImageView.image = newValue }
+    }
+    var imageContentMode: ContentMode? {
+        didSet {
+            if pictureImageView != nil {
+                pictureImageView.contentMode = imageContentMode ?? .scaleAspectFit
+            }
+        }
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -68,5 +74,29 @@ class APODPictureView: UIView {
         tapRecognizer.numberOfTapsRequired = 1
         contentView.isUserInteractionEnabled = true
         contentView.addGestureRecognizer(tapRecognizer)
+    }
+    func loadImageURL(imageURL: String, isThumbnail: Bool = true, shouldShowPlayButton: Bool = false) {
+        self.shouldShowPlayIcon = shouldShowPlayButton
+        guard let url = URL(string: imageURL)else {
+            showErrorImage = true
+            return
+        }
+        showLoadingImage = true
+        NetworkManager.shared().loadImageData(url: url) { [weak self] data, error in
+            DispatchQueue.main.async {
+                if data == nil {
+                    self?.showErrorImage = true
+                    return
+                }
+                guard let image = UIImage(data: data!) else {
+                    self?.showErrorImage = true
+                    return
+                }
+                self?.currentImage = image
+                if let handler = self?.didUpdateImageHandler {
+                    handler()
+                }
+            }
+        }
     }
 }

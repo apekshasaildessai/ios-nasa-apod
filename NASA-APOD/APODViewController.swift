@@ -31,22 +31,19 @@ class APODViewController: UIViewController {
     var currentAPOD: APODEntity?
     var customSpinnerView : UIView?
     var showFavoritedAPODDate: Date?
+    var maxImageViewHeight: CGFloat {
+        let availableHeight = view.frame.height - apodPictureView.frame.origin.y
+        return availableHeight - view.frame.height/3
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        setupView()
         NotificationCenter.default.addObserver(self, selector: #selector(APODViewController.rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
-        self.dateTextField.datePicker(target: self,
-                                  doneAction: #selector(doneDateSelection),
-                                  cancelAction: #selector(cancelDateSelection),
-                                  datePickerMode: .date)
-        
-        addTapGestureToImageView()
-        apodDataLoader = ApodDataLoader()
         fetchAPODFor(date: YearMonthDay.today.asDate()!)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupView()
         if let favoritedDate = showFavoritedAPODDate {
             fetchAPODFor(date: favoritedDate)
             //reset
@@ -63,6 +60,19 @@ class APODViewController: UIViewController {
             print("Portrait")
         }
         updatePictureViewConstraints()
+    }
+    func setupView() {
+        self.dateTextField.datePicker(target: self,
+                                  doneAction: #selector(doneDateSelection),
+                                  cancelAction: #selector(cancelDateSelection),
+                                  datePickerMode: .date)
+        
+        addTapGestureToImageView()
+        apodDataLoader = ApodDataLoader()
+        apodPictureView.didUpdateImageHandler = { [weak self] in
+            self?.updatePictureViewConstraints()
+        }
+        addNavBarImage()
     }
     func fetchAPODFor(date: Date) {
         showLoadingView()
@@ -88,7 +98,7 @@ class APODViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showFullImageSegue" {
             if let destinationVC = segue.destination as? FullMediaViewController, let currentAPOD = currentAPOD {
-                if getMediaTypeFor(apodEntity: currentAPOD) == .image {
+                if currentAPOD.getMediaType() == .image {
                     destinationVC.imageUrl = currentAPOD.url
                     destinationVC.hdImageUrl = currentAPOD.hdUrl
                 } else {
@@ -110,11 +120,7 @@ class APODViewController: UIViewController {
     @IBAction func myFavoriteButtonTapped(_ sender: Any) {
         performSegue(withIdentifier: "showMyFavoritesView", sender: nil)
     }
-    func setupView() {
-        addNavBarImage()
-//        self.navigationItem.title = "Astronomy Picture of the Day"
-//        self.navigationItem.prompt = "Today's"
-    }
+
     @objc
     func cancelDateSelection() {
         self.dateTextField.resignFirstResponder()
@@ -166,51 +172,21 @@ class APODViewController: UIViewController {
             dateTextField.resignFirstResponder()
         }
     }
-
     func updateImage(apodItem: APODEntity) {
-        apodPictureView.showLoadingImage = true
-        if let thumbnailUrl = getThumbnailUrl(apodEntity: apodItem) {
-            downloadImageData(urlString: thumbnailUrl)
+        var isVideoAsset = false
+        if  apodItem.getMediaType() == .video {
+            isVideoAsset = true
         }
-        let mediaType = getMediaTypeFor(apodEntity: apodItem)
-        switch mediaType {
-        case .image:
-            apodPictureView.shouldShowPlayIcon = false
-        case .video:
-            apodPictureView.shouldShowPlayIcon = true
-        default:
-            apodPictureView.shouldShowPlayIcon = false
+        if let thumbnailUrl = apodItem.getThumbnailUrl() {
+            apodPictureView.loadImageURL(imageURL: thumbnailUrl, shouldShowPlayButton: isVideoAsset)
         }
-    }
-    func downloadImageData(urlString: String) {
-        guard let url = URL(string: urlString)else {
-            print("Invalid url...")
-            return
-        }
-        NetworkManager.shared().loadImageData(url: url) { [weak self] data, error in
-            DispatchQueue.main.async {
-                self?.updateImage(data: data)
-            }
-        }
-    }
-    func updateImage(data: Data?) {
-        if data == nil {
-            apodPictureView.showErrorImage = true
-            return
-        }
-        guard let image = UIImage(data: data!) else {
-            apodPictureView.showErrorImage = true
-            return
-        }
-        apodPictureView.thumbailImage = image
-        updatePictureViewConstraints()
     }
     func updatePictureViewConstraints()  {
-        if let image = apodPictureView.thumbailImage {
+        if let image = apodPictureView.currentImage {
             let ratio = image.size.width / image.size.height
             var newHeight = apodPictureView.frame.width / ratio
-            if newHeight > maxImageViewHeight() {
-                newHeight = maxImageViewHeight()
+            if newHeight > maxImageViewHeight {
+                newHeight = maxImageViewHeight
             }
             imageViewHeightConstraint.constant = newHeight
             view.layoutIfNeeded()
@@ -232,31 +208,6 @@ class APODViewController: UIViewController {
     }
     func setFavoratedDate(date: Date?)  {
        showFavoritedAPODDate = date
-    }
-    //Utility method
-    func getMediaTypeFor(apodEntity: APODEntity) -> APODMediaType {
-        guard let mediaType = currentAPOD?.mediaType else {
-            return APODMediaType.unknown
-        }
-        if let apodMediaType = APODMediaType.init(rawValue: mediaType) {
-            return apodMediaType
-        }
-        return APODMediaType.unknown
-    }
-    func maxImageViewHeight() -> CGFloat {
-        let availableHeight = view.frame.height - apodPictureView.frame.origin.y
-        return availableHeight - view.frame.height/3
-    }
-    func getThumbnailUrl(apodEntity: APODEntity) -> String? {
-        let apodMediaType = getMediaTypeFor(apodEntity: apodEntity)
-        switch apodMediaType {
-        case .image:
-            return apodEntity.url
-        case .video:
-            return apodEntity.thumbnail
-        default:
-            return nil
-        }
     }
 }
 extension APODViewController {

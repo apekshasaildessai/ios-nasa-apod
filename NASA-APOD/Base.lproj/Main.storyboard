@@ -273,28 +273,32 @@
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="g5d-Da-Nyo">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="21d-Wd-sUh" customClass="APODPictureView" customModule="NASA_APOD" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="150" height="131"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="characterWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ouM-8j-6fC">
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ouM-8j-6fC">
                                                     <rect key="frame" x="5" y="133.5" width="140" height="14"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="14" id="N9R-5b-YdP"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="ouM-8j-6fC" firstAttribute="top" secondItem="g5d-Da-Nyo" secondAttribute="bottom" constant="2.5" id="5vZ-7r-QkX"/>
-                                                <constraint firstAttribute="trailing" secondItem="g5d-Da-Nyo" secondAttribute="trailing" id="AvL-Za-Ywz"/>
+                                                <constraint firstItem="ouM-8j-6fC" firstAttribute="top" secondItem="21d-Wd-sUh" secondAttribute="bottom" constant="2.5" id="9Mo-99-wZ6"/>
                                                 <constraint firstAttribute="trailing" secondItem="ouM-8j-6fC" secondAttribute="trailing" constant="5" id="Fp8-oR-GGQ"/>
-                                                <constraint firstItem="g5d-Da-Nyo" firstAttribute="leading" secondItem="0fh-j8-Nkk" secondAttribute="leading" id="OYa-Hb-tfb"/>
                                                 <constraint firstItem="ouM-8j-6fC" firstAttribute="leading" secondItem="0fh-j8-Nkk" secondAttribute="leading" constant="5" id="VDt-yF-9IP"/>
-                                                <constraint firstItem="g5d-Da-Nyo" firstAttribute="top" secondItem="0fh-j8-Nkk" secondAttribute="top" id="XrX-P5-P3t"/>
+                                                <constraint firstItem="21d-Wd-sUh" firstAttribute="top" secondItem="0fh-j8-Nkk" secondAttribute="top" id="cj6-hv-hLf"/>
+                                                <constraint firstAttribute="trailing" secondItem="21d-Wd-sUh" secondAttribute="trailing" id="sXx-xp-C8I"/>
                                                 <constraint firstAttribute="bottom" secondItem="ouM-8j-6fC" secondAttribute="bottom" constant="2.5" id="val-s6-bdo"/>
+                                                <constraint firstItem="21d-Wd-sUh" firstAttribute="leading" secondItem="0fh-j8-Nkk" secondAttribute="leading" id="xpF-I4-i8S"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <connections>
-                                            <outlet property="itemImageView" destination="g5d-Da-Nyo" id="ADd-fY-c0x"/>
+                                            <outlet property="itemImageView" destination="21d-Wd-sUh" id="ssR-Hs-Ok2"/>
                                             <outlet property="titleLabel" destination="ouM-8j-6fC" id="SYi-ft-tSf"/>
                                         </connections>
                                     </collectionViewCell>

@@ -34,15 +34,6 @@ public struct YearMonthDay {
     }
     return date
   }
-
-  public func nextDate(in calendar: Calendar) -> Date? {
-    guard
-      let thisDate = calendar.date(from: DateComponents(year: year, month: month, day: day)),
-      let nextDate = calendar.date(byAdding: .day, value: 1, to: thisDate)
-    else { return nil }
-
-    return calendar.startOfDay(for: nextDate)
-  }
 }
 
 extension YearMonthDay: LosslessStringConvertible {
