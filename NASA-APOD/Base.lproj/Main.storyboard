@@ -33,6 +33,15 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Brc-nw-4Ha">
                                                 <rect key="frame" x="20" y="600" width="374" height="50"/>
                                                 <subviews>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FO0-bW-UwA">
+                                                        <rect key="frame" x="0.0" y="12.5" width="320" height="25"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="25" id="zyK-Z3-8hu"/>
+                                                        </constraints>
+                                                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jxd-mW-5S1">
                                                         <rect key="frame" x="330" y="3" width="44" height="44"/>
                                                         <constraints>
@@ -46,22 +55,13 @@
                                                             <action selector="favoriteButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="08j-gf-13s"/>
                                                         </connections>
                                                     </button>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tA2-2R-Dd9">
-                                                        <rect key="frame" x="0.0" y="12.5" width="320" height="25"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="25" id="Lev-cW-1ra"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                                        <color key="textColor" systemColor="secondaryLabelColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstItem="tA2-2R-Dd9" firstAttribute="centerY" secondItem="Brc-nw-4Ha" secondAttribute="centerY" id="B6c-OT-02a"/>
+                                                    <constraint firstItem="jxd-mW-5S1" firstAttribute="leading" secondItem="FO0-bW-UwA" secondAttribute="trailing" constant="10" id="5gB-vU-RjG"/>
                                                     <constraint firstItem="jxd-mW-5S1" firstAttribute="centerY" secondItem="Brc-nw-4Ha" secondAttribute="centerY" id="Nb6-rb-Fdp"/>
+                                                    <constraint firstItem="FO0-bW-UwA" firstAttribute="centerY" secondItem="Brc-nw-4Ha" secondAttribute="centerY" id="WzK-Vk-v0B"/>
                                                     <constraint firstAttribute="height" constant="50" id="abN-zS-0ne"/>
-                                                    <constraint firstItem="tA2-2R-Dd9" firstAttribute="leading" secondItem="Brc-nw-4Ha" secondAttribute="leading" id="hBf-5K-YXu"/>
-                                                    <constraint firstItem="jxd-mW-5S1" firstAttribute="leading" secondItem="tA2-2R-Dd9" secondAttribute="trailing" constant="10" id="s9p-XX-Z7W"/>
+                                                    <constraint firstItem="FO0-bW-UwA" firstAttribute="leading" secondItem="Brc-nw-4Ha" secondAttribute="leading" id="jSl-QN-edH"/>
                                                     <constraint firstAttribute="trailing" secondItem="jxd-mW-5S1" secondAttribute="trailing" id="wo0-X2-DGi"/>
                                                 </constraints>
                                             </view>
@@ -108,20 +108,23 @@
                                 <viewLayoutGuide key="frameLayoutGuide" id="9WQ-Hz-WcA"/>
                             </scrollView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="6UJ-Hd-WV9">
-                                <rect key="frame" x="40" y="842" width="334" height="44"/>
+                                <rect key="frame" x="20" y="842" width="374" height="44"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fbg-qa-lpf">
-                                        <rect key="frame" x="0.0" y="13" width="162" height="18.5"/>
-                                        <color key="textColor" systemColor="secondaryLabelColor"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Njl-3J-g6D">
-                                        <rect key="frame" x="172" y="11" width="162" height="22"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WmU-3s-oop">
+                                        <rect key="frame" x="0.0" y="11" width="182" height="22"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" systemColor="systemBlueColor"/>
+                                        <state key="normal" image="calendar" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="calenderButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mnx-xY-Q5N"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Njl-3J-g6D">
+                                        <rect key="frame" x="192" y="11" width="182" height="22"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                         <color key="tintColor" systemColor="systemRedColor"/>
-                                        <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
                                         <state key="normal">
                                             <color key="titleColor" systemColor="secondaryLabelColor"/>
                                             <imageReference key="image" image="star.square.fill" catalog="system" symbolScale="large"/>
@@ -141,14 +144,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="6UJ-Hd-WV9" secondAttribute="bottom" constant="10" id="Jot-LJ-z7t"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6UJ-Hd-WV9" secondAttribute="trailing" constant="40" id="MsW-t3-sMq">
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6UJ-Hd-WV9" secondAttribute="trailing" constant="20" id="MsW-t3-sMq">
                                 <variation key="heightClass=regular-widthClass=regular" constant="20"/>
                             </constraint>
                             <constraint firstItem="mvH-3W-qhV" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="bcB-wb-AwU"/>
                             <constraint firstItem="mvH-3W-qhV" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="kXC-Y3-irN"/>
                             <constraint firstItem="6UJ-Hd-WV9" firstAttribute="top" secondItem="mvH-3W-qhV" secondAttribute="bottom" id="si5-nL-RcV"/>
                             <constraint firstItem="mvH-3W-qhV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="t4a-cr-c3S"/>
-                            <constraint firstItem="6UJ-Hd-WV9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="wfB-FT-3E7">
+                            <constraint firstItem="6UJ-Hd-WV9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="wfB-FT-3E7">
                                 <variation key="heightClass=regular-widthClass=regular" constant="20"/>
                             </constraint>
                         </constraints>
@@ -156,8 +159,8 @@
                     <navigationItem key="navigationItem" title="Astronomy Picture of the Day" largeTitleDisplayMode="always" id="O4o-d5-Gfx"/>
                     <connections>
                         <outlet property="apodPictureView" destination="Q8S-4C-7xO" id="pJX-np-0M6"/>
-                        <outlet property="dateLabel" destination="tA2-2R-Dd9" id="ESj-vB-gUm"/>
-                        <outlet property="dateTextField" destination="fbg-qa-lpf" id="h9V-hI-AMp"/>
+                        <outlet property="calenderButton" destination="WmU-3s-oop" id="O4S-Ys-Xzv"/>
+                        <outlet property="dateTextField" destination="FO0-bW-UwA" id="WEb-GE-uJh"/>
                         <outlet property="descriptionLabel" destination="X4T-1q-hyh" id="d3V-zw-mco"/>
                         <outlet property="favoriteButton" destination="jxd-mW-5S1" id="iny-lM-ZUx"/>
                         <outlet property="imageViewHeightConstraint" destination="JU3-17-zj7" id="jn5-Yo-g30"/>
@@ -375,6 +378,7 @@
     </scenes>
     <resources>
         <image name="arrow.backward" catalog="system" width="128" height="98"/>
+        <image name="calendar" catalog="system" width="128" height="106"/>
         <image name="star" catalog="system" width="128" height="116"/>
         <image name="star.square.fill" catalog="system" width="128" height="114"/>
         <systemColor name="secondaryLabelColor">
@@ -382,6 +386,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

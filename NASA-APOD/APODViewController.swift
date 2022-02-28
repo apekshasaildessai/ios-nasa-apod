@@ -20,13 +20,8 @@ class APODViewController: UIViewController {
     @IBOutlet private weak var myFavoritesButton: UIButton!
     @IBOutlet private weak var imageViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var apodPictureView: APODPictureView!
-    @IBOutlet private weak var dateLabel: UILabel!
-    @IBOutlet private weak var dateTextField: UITextField! {
-        didSet {
-            dateTextField.tintColor = UIColor.systemBlue
-            dateTextField.setIcon(UIImage(systemName: "calendar")!)
-        }
-    }
+    @IBOutlet private weak var dateTextField: UITextField!
+    @IBOutlet private weak var calenderButton: UIButton!
     var currentAPOD: APODEntity?
     var showFavoritedAPODDate: Date?
     var maxImageViewHeight: CGFloat {
@@ -79,6 +74,9 @@ class APODViewController: UIViewController {
         }
         
     }
+    @IBAction func calenderButtonTapped(_ sender: Any) {
+        dateTextField.becomeFirstResponder()
+    }
     @IBAction func myFavoriteButtonTapped(_ sender: Any) {
         performSegue(withIdentifier: "showMyFavoritesView", sender: nil)
     }
@@ -93,7 +91,7 @@ class APODViewController: UIViewController {
         if let datePickerView = self.dateTextField.inputView as? UIDatePicker {
             
             let yearMonthDay = YearMonthDay(localTime: datePickerView.date)
-            self.dateLabel.text = yearMonthDay.longDate
+            self.dateTextField.text = yearMonthDay.longDate
             self.dateTextField.resignFirstResponder()
             //Update POD
             fetchAPODFor(date: datePickerView.date)
@@ -144,7 +142,7 @@ class APODViewController: UIViewController {
         //TODO: remove force unwrapping
         if let date = currentAPOD?.date {
             let yearMonthDay = YearMonthDay(localTime: date)
-            dateLabel.text = yearMonthDay.longDate
+            dateTextField.text = yearMonthDay.longDate
             dateTextField.resignFirstResponder()
         }
     }
@@ -246,7 +244,7 @@ extension APODViewController {
         titleLabel.text = ErrorMessages.noAPODinApp
         apodPictureView.showErrorImage = true
         apodPictureView.shouldShowPlayIcon = false
-        dateLabel.text = ""
+        dateTextField.text = ""
         descriptionLabel.text = ""
     }
 }
