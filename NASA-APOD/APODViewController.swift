@@ -13,88 +13,50 @@ enum APODViewConstants {
 }
 
 class APODViewController: UIViewController {
-  
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var favoriteButton: UIButton!
-    @IBOutlet weak var myFavoritesButton: UIButton!
-    @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var apodPictureView: APODPictureView!
-    @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var dateTextField: UITextField! {
+    // MARK: - Properties
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var favoriteButton: UIButton!
+    @IBOutlet private weak var myFavoritesButton: UIButton!
+    @IBOutlet private weak var imageViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var apodPictureView: APODPictureView!
+    @IBOutlet private weak var dateLabel: UILabel!
+    @IBOutlet private weak var dateTextField: UITextField! {
         didSet {
             dateTextField.tintColor = UIColor.systemBlue
             dateTextField.setIcon(UIImage(systemName: "calendar")!)
         }
     }
-    var apodDataLoader: ApodDataLoader?
     var currentAPOD: APODEntity?
-    var customSpinnerView : UIView?
     var showFavoritedAPODDate: Date?
     var maxImageViewHeight: CGFloat {
         let availableHeight = view.frame.height - apodPictureView.frame.origin.y
         return availableHeight - view.frame.height/3
     }
+    lazy var apodDataLoader: ApodDataLoader = {
+        return ApodDataLoader()
+    }()
+    // MARK: - Life cycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         setupView()
-        NotificationCenter.default.addObserver(self, selector: #selector(APODViewController.rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
         fetchAPODFor(date: YearMonthDay.today.asDate()!)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        //Show favorated apod
         if let favoritedDate = showFavoritedAPODDate {
             fetchAPODFor(date: favoritedDate)
             //reset
             showFavoritedAPODDate = nil
         }
     }
-    deinit {
-         NotificationCenter.default.removeObserver(self)
-    }
-    @objc func rotated() {
-        if UIDevice.current.orientation.isLandscape {
-            print("Landscape")
-        } else {
-            print("Portrait")
-        }
+    override func viewDidLayoutSubviews() {
         updatePictureViewConstraints()
+        super.viewDidLayoutSubviews()
     }
-    func setupView() {
-        self.dateTextField.datePicker(target: self,
-                                  doneAction: #selector(doneDateSelection),
-                                  cancelAction: #selector(cancelDateSelection),
-                                  datePickerMode: .date)
-        
-        addTapGestureToImageView()
-        apodDataLoader = ApodDataLoader()
-        apodPictureView.didUpdateImageHandler = { [weak self] in
-            self?.updatePictureViewConstraints()
-        }
-        addNavBarImage()
-    }
-    func fetchAPODFor(date: Date) {
-        showLoadingView()
-        if let savedAPOD = self.apodDataLoader?.fetchSavedAPODFor(day: date) {
-            updateAPODDetails(apodItem: savedAPOD)
-            return
-        }
-        NetworkManager.shared().loadAPODData(dateString: YearMonthDay(localTime: date).description) { [weak self] apodItem in
-            if apodItem != nil && apodItem?.date != nil {
-                if let savedAPODEntity = self?.apodDataLoader?.saveAPOD(apodItem: apodItem!) {
-                    DispatchQueue.main.async {
-                        self?.updateAPODDetails(apodItem: savedAPODEntity)
-                    }
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self?.handleErrorFetchingAPOD()
-                }
-            }
-        }
-    }
-    //Storyboard methods
+    // MARK: - Storyboard events
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showFullImageSegue" {
             if let destinationVC = segue.destination as? FullMediaViewController, let currentAPOD = currentAPOD {
@@ -108,11 +70,11 @@ class APODViewController: UIViewController {
             }
         }
     }
-    //UI methods
+    // MARK: - UI Actions
     @IBAction func favoriteButtonTapped(_ sender: Any) {
         if let apodEntity = currentAPOD {
             apodEntity.isFavorite = !apodEntity.isFavorite
-            apodDataLoader?.saveFavorite(apodItem: apodEntity)
+            apodDataLoader.saveFavorite(apodItem: apodEntity)
             updateFavoriteButton()
         }
         
@@ -120,12 +82,12 @@ class APODViewController: UIViewController {
     @IBAction func myFavoriteButtonTapped(_ sender: Any) {
         performSegue(withIdentifier: "showMyFavoritesView", sender: nil)
     }
-
+    
     @objc
     func cancelDateSelection() {
         self.dateTextField.resignFirstResponder()
     }
-
+    
     @objc
     func doneDateSelection() {
         if let datePickerView = self.dateTextField.inputView as? UIDatePicker {
@@ -136,6 +98,24 @@ class APODViewController: UIViewController {
             //Update POD
             fetchAPODFor(date: datePickerView.date)
         }
+    }
+    @objc
+    func didTapOnImageView() {
+        performSegue(withIdentifier: "showFullImageSegue", sender: nil)
+    }
+    
+    //MARK: - UI update methods
+    func setupView() {
+        //Set required state for UI
+        self.dateTextField.datePicker(target: self,
+                                  doneAction: #selector(doneDateSelection),
+                                  cancelAction: #selector(cancelDateSelection),
+                                  datePickerMode: .date)
+        addTapGestureToImageView()
+        apodPictureView.didUpdateImageHandler = { [weak self] in
+            self?.updatePictureViewConstraints()
+        }
+        addNavBarImage()
     }
     func addNavBarImage() {
         let navController = navigationController!
@@ -151,10 +131,6 @@ class APODViewController: UIViewController {
     }
     func addTapGestureToImageView() {
         apodPictureView.enableTapGestureWith(target: self, onTapAction: #selector(didTapOnImageView))
-    }
-    @objc
-    func didTapOnImageView() {
-        performSegue(withIdentifier: "showFullImageSegue", sender: nil)
     }
     func updateAPODDetails(apodItem: APODEntity) {
         removeLoadingView()
@@ -185,6 +161,7 @@ class APODViewController: UIViewController {
         if let image = apodPictureView.currentImage {
             let ratio = image.size.width / image.size.height
             var newHeight = apodPictureView.frame.width / ratio
+            print(maxImageViewHeight)
             if newHeight > maxImageViewHeight {
                 newHeight = maxImageViewHeight
             }
@@ -209,6 +186,28 @@ class APODViewController: UIViewController {
     func setFavoratedDate(date: Date?)  {
        showFavoritedAPODDate = date
     }
+    // MARK: - API Calls
+    func fetchAPODFor(date: Date) {
+        showLoadingView()
+        if let savedAPOD = self.apodDataLoader.fetchSavedAPODFor(day: date) {
+            updateAPODDetails(apodItem: savedAPOD)
+            return
+        }
+        let requestQuery = NetworkManager.queryAPODForDate(dateString: YearMonthDay(localTime: date).description)
+        NetworkManager.shared().fetchData(query: requestQuery) { [weak self] (apodItem: APODItem?) in
+            if apodItem != nil && apodItem?.date != nil {
+                if let savedAPODEntity = self?.apodDataLoader.saveAPOD(apodItem: apodItem!) {
+                    DispatchQueue.main.async {
+                        self?.updateAPODDetails(apodItem: savedAPODEntity)
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self?.handleErrorFetchingAPOD()
+                }
+            }
+        }
+    }
 }
 extension APODViewController {
     func showLoadingView () {
@@ -229,13 +228,13 @@ extension APODViewController {
     
     func handleErrorFetchingAPOD()  {
         removeLoadingView { [weak self] in
-            let alert = UIAlertController(title: "Error Loading Picture for this Day", message: "No Picture found or Network Error", preferredStyle: .alert)
+            let alert = UIAlertController(title: ErrorMessages.apodNotFoundTitle, message: ErrorMessages.apodNotFoundMessage, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self?.present(alert, animated: true, completion: nil)
             
             if self?.currentAPOD == nil {
                 //show latested saved APOD
-                if let latestedAPOD = self?.apodDataLoader?.fetchLatestAPOD() {
+                if let latestedAPOD = self?.apodDataLoader.fetchLatestAPOD() {
                     self?.updateAPODDetails(apodItem: latestedAPOD)
                 } else {
                     self?.showNoPictureAvailable()
@@ -244,7 +243,7 @@ extension APODViewController {
         }
     }
     func showNoPictureAvailable() {
-        titleLabel.text = "NO Image to Display. Check Device Network Connection"
+        titleLabel.text = ErrorMessages.noAPODinApp
         apodPictureView.showErrorImage = true
         apodPictureView.shouldShowPlayIcon = false
         dateLabel.text = ""

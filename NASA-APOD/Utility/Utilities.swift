@@ -7,17 +7,6 @@
 
 import Foundation
 import UIKit
-public enum APODErrors: Error {
-  case invalidDate(String)
-  case missingURL
-  case emptyResponse
-  case failureResponse(statusCode: Int)
-  case invalidYouTubeVideo(String)
-  case invalidVimeoVideo(String)
-  case invalidImage
-  case unsupportedAsset
-  case fileCoordinationFailed
-}
 public enum APODMediaType: String {
     case video = "video"
     case image = "image"
@@ -26,6 +15,12 @@ public enum APODMediaType: String {
 
 public enum MediaConstants {
     static let youtubeRegex = #"://.*youtube\.com/embed/([^/?#]+)"#
+}
+
+public enum ErrorMessages {
+    static let apodNotFoundTitle = "Error Loading Picture for this Day"
+    static let apodNotFoundMessage = "No Picture found or Network Error"
+    static let noAPODinApp = "NO Image to Display. Check Device Network Connection"
 }
 
 extension UITextField {
@@ -61,7 +56,6 @@ extension UITextField {
                                                     height: UIScreen.main.bounds.height))
         datePicker.preferredDatePickerStyle = .wheels
         datePicker.datePickerMode = datePickerMode
-        datePicker.minimumDate = Utilities.apodMinDate
         self.inputView = datePicker
         
         let toolBar = UIToolbar(frame: CGRect(x: 0,
@@ -84,19 +78,5 @@ extension UITextField {
        iconContainerView.addSubview(iconView)
        leftView = iconContainerView
        leftViewMode = .always
-    }
-}
-
-struct Utilities {
-    static var apodMinDate: Date? {
-        // Specify date components
-        var dateComponents = DateComponents()
-        dateComponents.year = 1995
-        dateComponents.month = 1
-        dateComponents.day = 1
-        // Create date from components
-        let userCalendar = Calendar(identifier: .gregorian) // since the components above (like year 1980) are for Gregorian
-        let date = userCalendar.date(from: dateComponents)
-        return date
     }
 }

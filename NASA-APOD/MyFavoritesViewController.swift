@@ -20,14 +20,15 @@ class MyFavoritesViewController: UIViewController {
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var backButton: UIButton!
     private var myFavoriteAPODs =  [APODEntity]()
-    private var apodDataLoader: ApodDataLoader?
+    private lazy var apodDataLoader: ApodDataLoader = {
+        return ApodDataLoader()
+    }()
     // MARK: - Life cycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         //init
         collectionView.dataSource = self
         collectionView.delegate = self
-        apodDataLoader = ApodDataLoader()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -44,7 +45,7 @@ class MyFavoritesViewController: UIViewController {
         updateList()
     }
     func updateList() {
-        myFavoriteAPODs = apodDataLoader?.fetchMyFavoriteAPODs() ??  [APODEntity]()
+        myFavoriteAPODs = apodDataLoader.fetchMyFavoriteAPODs() ??  [APODEntity]()
         collectionView.reloadData()
     }
 }

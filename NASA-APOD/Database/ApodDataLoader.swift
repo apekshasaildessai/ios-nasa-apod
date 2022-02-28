@@ -37,12 +37,10 @@ struct ApodDataLoader {
             format: "date = %@", day as CVarArg
         )
         let context = PersistenceController.shared.container.viewContext
-        
         do {
             // Execute Fetch Request
             let apodEntity = try context.fetch(fetchRequest).first
             return apodEntity
-
         } catch {
             print("Unable to Execute Fetch Request, \(error)")
         }
@@ -58,7 +56,6 @@ struct ApodDataLoader {
             format: "isFavorite = YES"
         )
         let context = PersistenceController.shared.container.viewContext
-        
         do {
             // Execute Fetch Request
             let results = try context.fetch(fetchRequest)

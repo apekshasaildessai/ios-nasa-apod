@@ -8,7 +8,9 @@
 import Foundation
 import Network
 enum NetworkConstants {
-    static let baseUrl = "https://api.nasa.gov/planetary/apod?api_key=5wpcjBY2ZGO4LuwhJNRUTmC6zsS0Q6ANnfl0bISl&thumbs=true"
+    static let baseUrl = "https://api.nasa.gov/"
+    static let apiKey = "5wpcjBY2ZGO4LuwhJNRUTmC6zsS0Q6ANnfl0bISl"
+    static let getAPODURL = "planetary/apod?api_key=" + apiKey
 }
 class NetworkManager {
     // MARK: - Properties
@@ -25,13 +27,13 @@ class NetworkManager {
     class func shared() -> NetworkManager {
         return sharedNetworkManager
     }
-    func loadAPODData(dateString: String, completion:@escaping (APODItem?) -> ()) {
+    func fetchData<ResultObject: Decodable>(query: String, completion:@escaping (ResultObject?) -> ()) {
         if isNetworkAvailable == false {
             completion(nil)
             return
         }
-        guard let url = URL(string: NetworkConstants.baseUrl + "&date=" + dateString) else {
-             print("Invalid url...")
+        guard let url = URL(string: NetworkConstants.baseUrl + query) else {
+             completion(nil)
              return
          }
          URLSession.shared.dataTask(with: url) { data, response, error in
@@ -39,7 +41,7 @@ class NetworkManager {
                 completion(nil)
                 return
             }
-            if let apodData = try? JSONDecoder().decode(APODItem.self, from: responseData) {
+            if let apodData = try? JSONDecoder().decode(ResultObject.self, from: responseData) {
                 completion(apodData)
                 return
             }
@@ -75,33 +77,28 @@ class NetworkManager {
         // Download the remote URL to a file
         let task = URLSession.shared.downloadTask(with: url) {
             (tempURL, response, error) in
-            // Early exit on error
+            
             guard let tempURL = tempURL else {
                 completion(error)
                 return
             }
-
             do {
                 // Remove any existing document at file
                 if FileManager.default.fileExists(atPath: file.path) {
                     try FileManager.default.removeItem(at: file)
                 }
-
                 // Copy the tempURL to file
                 try FileManager.default.copyItem(
                     at: tempURL,
                     to: file
                 )
-
                 completion(nil)
             }
-
             // Handle potential file system errors
             catch let fileError {
                 completion(fileError)
             }
         }
-
         // Start the download
         task.resume()
     }
@@ -118,5 +115,10 @@ class NetworkManager {
         }
         let queue = DispatchQueue(label: "Monitor")
         monitor.start(queue: queue)
+    }
+}
+extension NetworkManager {
+    class func queryAPODForDate(dateString: String) -> String {
+        return NetworkConstants.getAPODURL + "&thumbs=true&date=" + dateString
     }
 }

@@ -49,11 +49,8 @@ class APODPictureView: UIView {
        set { pictureImageView.image = newValue }
     }
     var imageContentMode: ContentMode? {
-        didSet {
-            if pictureImageView != nil {
-                pictureImageView.contentMode = imageContentMode ?? .scaleAspectFit
-            }
-        }
+        get { return pictureImageView.contentMode }
+        set { pictureImageView.contentMode = newValue ?? .scaleAspectFit }
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
