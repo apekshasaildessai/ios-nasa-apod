@@ -7,18 +7,30 @@
 
 import Foundation
 import Network
-class Network {
-    var isNetworkAvailable = true
-    init() {
+enum NetworkConstants {
+    static let baseUrl = "https://api.nasa.gov/planetary/apod?api_key=5wpcjBY2ZGO4LuwhJNRUTmC6zsS0Q6ANnfl0bISl&thumbs=true"
+}
+class NetworkManager {
+    // MARK: - Properties
+    private var isNetworkAvailable = true
+    private static var sharedNetworkManager: NetworkManager = {
+        let networkManager = NetworkManager()
+        return networkManager
+    }()
+    private init() {
         startNetworkMonitoring()
     }
-    let baseUrl = "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&thumbs=true"
+
+    // MARK: - Accessors
+    class func shared() -> NetworkManager {
+        return sharedNetworkManager
+    }
     func loadAPODData(dateString: String, completion:@escaping (APODItem?) -> ()) {
         if isNetworkAvailable == false {
             completion(nil)
             return
         }
-         guard let url = URL(string: baseUrl + "&date=" + dateString) else {
+        guard let url = URL(string: NetworkConstants.baseUrl + "&date=" + dateString) else {
              print("Invalid url...")
              return
          }

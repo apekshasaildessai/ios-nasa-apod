@@ -6,30 +6,34 @@
 //
 
 import UIKit
+
 enum APODPictureViewConstants {
     static let nibName = "APODPictureView"
+    static let loadingImageName = "image_loading"
+    static let errorImageName = "image_error"
 }
 
 class APODPictureView: UIView {
-    @IBOutlet var contentView: UIView!
-    @IBOutlet weak var playImageView: UIImageView!
-    @IBOutlet weak var pictureImageView: UIImageView!
-    var shouldShowPlay = false {
+    // MARK: - Properties
+    @IBOutlet private weak var contentView: UIView!
+    @IBOutlet private weak var playImageView: UIImageView!
+    @IBOutlet private weak var pictureImageView: UIImageView!
+    var shouldShowPlayIcon = false {
         didSet {
-            playImageView.isHidden = !shouldShowPlay
+            playImageView.isHidden = !shouldShowPlayIcon
         }
     }
     var showLoadingImage: Bool? {
         didSet {
             if showLoadingImage ?? false {
-                pictureImageView.image = UIImage(named: "image_loading")
+                pictureImageView.image = UIImage(named: APODPictureViewConstants.loadingImageName)
             }
         }
     }
     var showErrorImage: Bool? {
         didSet {
-            if showLoadingImage ?? false {
-                pictureImageView.image = UIImage(named: "image_error")
+            if showErrorImage ?? false {
+                pictureImageView.image = UIImage(named: APODPictureViewConstants.errorImageName)
             }
         }
     }
@@ -41,6 +45,10 @@ class APODPictureView: UIView {
        get { return pictureImageView.image }
        set { pictureImageView.image = newValue }
     }
+    var currentImage: UIImage? {
+       get { return pictureImageView.image }
+       set { pictureImageView.image = newValue }
+    }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         initSubviews()
@@ -49,9 +57,7 @@ class APODPictureView: UIView {
         super.init(frame: frame)
         initSubviews()
     }
-    
     func initSubviews() {
-        // standard initialization logic
         let nib = UINib(nibName: APODPictureViewConstants.nibName, bundle: nil)
         nib.instantiate(withOwner: self, options: nil)
         contentView.frame = bounds

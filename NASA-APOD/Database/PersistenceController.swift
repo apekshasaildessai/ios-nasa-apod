@@ -14,9 +14,7 @@ struct PersistenceController {
     // Storage for Core Data
     let container: NSPersistentContainer
 
-
-    // An initializer to load Core Data, optionally able
-    // to use an in-memory store.
+    // An initializer to load Core Data
     private init() {
         container = NSPersistentContainer(name: "APOD")
         container.loadPersistentStores { description, error in

@@ -82,7 +82,7 @@ class PanZoomImageView: UIScrollView {
 }
 
 extension PanZoomImageView: UIScrollViewDelegate {
-
+    
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
     }

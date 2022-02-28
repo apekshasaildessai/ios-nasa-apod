@@ -51,7 +51,7 @@ struct ApodDataLoader {
     func saveFavorite(apodItem: APODEntity) {
         PersistenceController.shared.save()
     }
-    func fetchMyFavoriteAPOD() -> [APODEntity]? {
+    func fetchMyFavoriteAPODs() -> [APODEntity]? {
         // Create Fetch Request
         let fetchRequest: NSFetchRequest<APODEntity> = APODEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(

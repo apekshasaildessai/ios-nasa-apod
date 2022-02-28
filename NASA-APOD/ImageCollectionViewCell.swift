@@ -9,18 +9,18 @@ import Foundation
 import UIKit
 
 class ImageCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var itemImageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    var networkManager = Network()
+    // MARK: - Properties
+    @IBOutlet private weak var itemImageView: UIImageView!
+    @IBOutlet private weak var titleLabel: UILabel!
     func updateTitle(title : String) {
         titleLabel.text = title
     }
     func loadImageData(imageUrl: String) {
         guard let url = URL(string: imageUrl)else {
-            print("Invalid url...")
+            //Invalid url
             return
         }
-        networkManager.loadImageData(url: url) { [weak self] data, error in
+        NetworkManager.shared().loadImageData(url: url) { [weak self] data, error in
             if data != nil {
                 DispatchQueue.main.async {
                     self?.itemImageView.image = UIImage(data: data!)

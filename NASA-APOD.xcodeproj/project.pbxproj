@@ -19,7 +19,7 @@
 		DB4145E927C986F100AFE5B6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB4145E727C986F100AFE5B6 /* Main.storyboard */; };
 		DB4145EB27C986F200AFE5B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB4145EA27C986F200AFE5B6 /* Assets.xcassets */; };
 		DB4145EE27C986F200AFE5B6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB4145EC27C986F200AFE5B6 /* LaunchScreen.storyboard */; };
-		DB4145F627C9A49E00AFE5B6 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4145F527C9A49E00AFE5B6 /* Network.swift */; };
+		DB4145F627C9A49E00AFE5B6 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4145F527C9A49E00AFE5B6 /* NetworkManager.swift */; };
 		DB4145F827C9A54A00AFE5B6 /* APODItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4145F727C9A54A00AFE5B6 /* APODItem.swift */; };
 		DB4145FC27C9FB9300AFE5B6 /* APOD.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DB4145FA27C9FB9300AFE5B6 /* APOD.xcdatamodeld */; };
 		DB4145FE27CA024900AFE5B6 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4145FD27CA024900AFE5B6 /* PersistenceController.swift */; };
@@ -46,7 +46,7 @@
 		DB4145EA27C986F200AFE5B6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DB4145ED27C986F200AFE5B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DB4145EF27C986F200AFE5B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DB4145F527C9A49E00AFE5B6 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		DB4145F527C9A49E00AFE5B6 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		DB4145F727C9A54A00AFE5B6 /* APODItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APODItem.swift; sourceTree = "<group>"; };
 		DB4145FB27C9FB9300AFE5B6 /* APOD.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = APOD.xcdatamodel; sourceTree = "<group>"; };
 		DB4145FD27CA024900AFE5B6 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
@@ -100,19 +100,17 @@
 		DB4145E027C986F100AFE5B6 /* NASA-APOD */ = {
 			isa = PBXGroup;
 			children = (
+				DB8BD78027CCC4F1001A0291 /* ViewControllers */,
+				DB8BD77F27CCC435001A0291 /* CustomViews */,
 				DB41460027CA2BA400AFE5B6 /* Utility */,
 				DB4145FF27CA2A6800AFE5B6 /* Networking */,
 				DB4145F927C9FB5100AFE5B6 /* Database */,
 				DB4145E127C986F100AFE5B6 /* AppDelegate.swift */,
 				DB4145E327C986F100AFE5B6 /* SceneDelegate.swift */,
-				DB4145E527C986F100AFE5B6 /* APODViewController.swift */,
 				DB4145E727C986F100AFE5B6 /* Main.storyboard */,
 				DB4145EA27C986F200AFE5B6 /* Assets.xcassets */,
 				DB4145EC27C986F200AFE5B6 /* LaunchScreen.storyboard */,
 				DB4145EF27C986F200AFE5B6 /* Info.plist */,
-				DB41460727CAA12D00AFE5B6 /* FullImageViewController.swift */,
-				DB3973A827CAB59E00448035 /* MyFavoritesViewController.swift */,
-				DB3973AA27CABB6500448035 /* ImageCollectionViewCell.swift */,
 			);
 			path = "NASA-APOD";
 			sourceTree = "<group>";
@@ -130,7 +128,7 @@
 		DB4145FF27CA2A6800AFE5B6 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				DB4145F527C9A49E00AFE5B6 /* Network.swift */,
+				DB4145F527C9A49E00AFE5B6 /* NetworkManager.swift */,
 				DB4145F727C9A54A00AFE5B6 /* APODItem.swift */,
 			);
 			path = Networking;
@@ -141,13 +139,31 @@
 			children = (
 				DB41460127CA2BBE00AFE5B6 /* YearMonthDay.swift */,
 				DB41460327CA2C6C00AFE5B6 /* Utilities.swift */,
-				DB41460527CA9ED800AFE5B6 /* PanZoomImageView.swift */,
 				DB3973B627CB40A800448035 /* MediaData.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		DB8BD77F27CCC435001A0291 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				DB41460527CA9ED800AFE5B6 /* PanZoomImageView.swift */,
 				DB3973B827CB559600448035 /* LoadingViewController.swift */,
 				DB8BD77B27CC276F001A0291 /* APODPictureView.xib */,
 				DB8BD77D27CC27DD001A0291 /* APODPictureView.swift */,
 			);
-			path = Utility;
+			name = CustomViews;
+			sourceTree = "<group>";
+		};
+		DB8BD78027CCC4F1001A0291 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				DB4145E527C986F100AFE5B6 /* APODViewController.swift */,
+				DB41460727CAA12D00AFE5B6 /* FullImageViewController.swift */,
+				DB3973A827CAB59E00448035 /* MyFavoritesViewController.swift */,
+				DB3973AA27CABB6500448035 /* ImageCollectionViewCell.swift */,
+			);
+			name = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -237,7 +253,7 @@
 				DB4145FC27C9FB9300AFE5B6 /* APOD.xcdatamodeld in Sources */,
 				DB4145E227C986F100AFE5B6 /* AppDelegate.swift in Sources */,
 				DB41460627CA9ED800AFE5B6 /* PanZoomImageView.swift in Sources */,
-				DB4145F627C9A49E00AFE5B6 /* Network.swift in Sources */,
+				DB4145F627C9A49E00AFE5B6 /* NetworkManager.swift in Sources */,
 				DB41460A27CAACB800AFE5B6 /* ApodDataLoader.swift in Sources */,
 				DB41460427CA2C6C00AFE5B6 /* Utilities.swift in Sources */,
 				DB3973AB27CABB6500448035 /* ImageCollectionViewCell.swift in Sources */,

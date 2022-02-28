@@ -27,7 +27,6 @@ class APODViewController: UIViewController {
             dateTextField.setIcon(UIImage(systemName: "calendar")!)
         }
     }
-    let networkManager =  Network()
     var apodDataLoader: ApodDataLoader?
     var currentAPOD: APODEntity?
     var customSpinnerView : UIView?
@@ -71,7 +70,7 @@ class APODViewController: UIViewController {
             updateAPODDetails(apodItem: savedAPOD)
             return
         }
-        networkManager.loadAPODData(dateString: YearMonthDay(localTime: date).description) { [weak self] apodItem in
+        NetworkManager.shared().loadAPODData(dateString: YearMonthDay(localTime: date).description) { [weak self] apodItem in
             if apodItem != nil && apodItem?.date != nil {
                 if let savedAPODEntity = self?.apodDataLoader?.saveAPOD(apodItem: apodItem!) {
                     DispatchQueue.main.async {
@@ -88,7 +87,7 @@ class APODViewController: UIViewController {
     //Storyboard methods
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showFullImageSegue" {
-            if let destinationVC = segue.destination as? FullImageViewController, let currentAPOD = currentAPOD {
+            if let destinationVC = segue.destination as? FullMediaViewController, let currentAPOD = currentAPOD {
                 if getMediaTypeFor(apodEntity: currentAPOD) == .image {
                     destinationVC.imageUrl = currentAPOD.url
                     destinationVC.hdImageUrl = currentAPOD.hdUrl
@@ -176,11 +175,11 @@ class APODViewController: UIViewController {
         let mediaType = getMediaTypeFor(apodEntity: apodItem)
         switch mediaType {
         case .image:
-            apodPictureView.shouldShowPlay = false
+            apodPictureView.shouldShowPlayIcon = false
         case .video:
-            apodPictureView.shouldShowPlay = true
+            apodPictureView.shouldShowPlayIcon = true
         default:
-            apodPictureView.shouldShowPlay = false
+            apodPictureView.shouldShowPlayIcon = false
         }
     }
     func downloadImageData(urlString: String) {
@@ -188,7 +187,7 @@ class APODViewController: UIViewController {
             print("Invalid url...")
             return
         }
-        networkManager.loadImageData(url: url) { [weak self] data, error in
+        NetworkManager.shared().loadImageData(url: url) { [weak self] data, error in
             DispatchQueue.main.async {
                 self?.updateImage(data: data)
             }
@@ -287,8 +286,17 @@ extension APODViewController {
                 //show latested saved APOD
                 if let latestedAPOD = self?.apodDataLoader?.fetchLatestAPOD() {
                     self?.updateAPODDetails(apodItem: latestedAPOD)
+                } else {
+                    self?.showNoPictureAvailable()
                 }
             }
         }
+    }
+    func showNoPictureAvailable() {
+        titleLabel.text = "NO Image to Display. Check Device Network Connection"
+        apodPictureView.showErrorImage = true
+        apodPictureView.shouldShowPlayIcon = false
+        dateLabel.text = ""
+        descriptionLabel.text = ""
     }
 }

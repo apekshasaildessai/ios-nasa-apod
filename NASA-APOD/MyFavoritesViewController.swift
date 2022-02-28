@@ -10,38 +10,45 @@ import UIKit
 
 enum MyFavoriteViewConstants {
     static let minCellSize = 150
+    static let favoriteCellIdentifier = "dataCell"
+    static let title = "My Favorites"
 }
 
 class MyFavoritesViewController: UIViewController {
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var backButton: UIButton!
-    var myFavoriteAPODs =  [APODEntity]()
-    var apodDataLoader: ApodDataLoader?
+    // MARK: - Properties
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet private weak var backButton: UIButton!
+    private var myFavoriteAPODs =  [APODEntity]()
+    private var apodDataLoader: ApodDataLoader?
+    // MARK: - Life cycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        //init
         collectionView.dataSource = self
         collectionView.delegate = self
         apodDataLoader = ApodDataLoader()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationItem.setHidesBackButton(true, animated: false)
-        self.title = "My Favorites"
-        updateList()
+        setupView()
     }
-    //UI Actions
+    // MARK: - UI Actions
     @IBAction func backButtonTapped(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
+    //MARK: - UI update methods
+    func setupView() {
+        self.navigationItem.setHidesBackButton(true, animated: false)
+        self.title = MyFavoriteViewConstants.title
+        updateList()
+    }
     func updateList() {
-        myFavoriteAPODs = apodDataLoader?.fetchMyFavoriteAPOD() ??  [APODEntity]()
+        myFavoriteAPODs = apodDataLoader?.fetchMyFavoriteAPODs() ??  [APODEntity]()
         collectionView.reloadData()
     }
-    
 }
 extension MyFavoritesViewController: UICollectionViewDataSource {
- 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -49,23 +56,23 @@ extension MyFavoritesViewController: UICollectionViewDataSource {
         return myFavoriteAPODs.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dataCell", for: indexPath) as! ImageCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyFavoriteViewConstants.favoriteCellIdentifier, for: indexPath) as! ImageCollectionViewCell
         let apodEntity = myFavoriteAPODs[indexPath.row]
         cell.loadImageData(imageUrl: apodEntity.getThumbnailUrl() ?? "")
-        cell.updateTitle(title: apodEntity.title ?? "")
+        cell.updateTitle(title: apodEntity.title ?? "Title")
         return cell
     }
 }
 extension MyFavoritesViewController: UICollectionViewDelegateFlowLayout {
-
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         //TODO: Calculate and return
-        return CGSize(width: 150, height: 150)
+        return CGSize(width: MyFavoriteViewConstants.minCellSize, height: MyFavoriteViewConstants.minCellSize)
 
     }
 }
 extension MyFavoritesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //get selected apod item
         let apodEntity = myFavoriteAPODs[indexPath.row]
         //Set value in APODViewController
         if let apodViewController = navigationController?.viewControllers.first as? APODViewController {

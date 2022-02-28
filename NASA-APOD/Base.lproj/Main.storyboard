@@ -171,10 +171,10 @@
             </objects>
             <point key="canvasLocation" x="1047.8260869565217" y="73.660714285714278"/>
         </scene>
-        <!--Full Image View Controller-->
+        <!--Full Media View Controller-->
         <scene sceneID="10d-Aj-xcl">
             <objects>
-                <viewController id="YdY-0f-57h" customClass="FullImageViewController" customModule="NASA_APOD" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="YdY-0f-57h" customClass="FullMediaViewController" customModule="NASA_APOD" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="noL-pD-902">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

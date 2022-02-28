@@ -24,6 +24,10 @@ public enum APODMediaType: String {
     case unknown = "unknown"
 }
 
+public enum MediaConstants {
+    static let youtubeRegex = #"://.*youtube\.com/embed/([^/?#]+)"#
+}
+
 extension UITextField {
     func datePicker<T>(target: T,
                        doneAction: Selector,
