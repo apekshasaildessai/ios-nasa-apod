@@ -14,11 +14,15 @@ class Network {
              return
          }
          URLSession.shared.dataTask(with: url) { data, response, error in
-             let apod = try! JSONDecoder().decode(APODItem.self, from: data!)
-             print(apod)
-             DispatchQueue.main.async {
-                 completion(apod)
-             }
+            guard let responseData = data else {
+                completion(nil)
+                return
+            }
+            if let apodData = try? JSONDecoder().decode(APODItem.self, from: responseData) {
+                completion(apodData)
+                return
+            }
+            completion(nil)
          }.resume()
          
      }

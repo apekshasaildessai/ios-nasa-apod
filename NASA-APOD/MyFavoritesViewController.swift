@@ -69,7 +69,7 @@ extension MyFavoritesViewController: UICollectionViewDelegate {
         let apodEntity = myFavoriteAPODs[indexPath.row]
         //Set value in APODViewController
         if let apodViewController = navigationController?.viewControllers.first as? APODViewController {
-            apodViewController.setFavoratedDate(date: apodEntity.date!)
+            apodViewController.setFavoratedDate(date: apodEntity.date)
         }
         //pop to apodViewController
         navigationController?.popToRootViewController(animated: false)

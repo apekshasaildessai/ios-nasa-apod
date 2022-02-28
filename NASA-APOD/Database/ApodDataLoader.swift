@@ -19,7 +19,7 @@ struct ApodDataLoader {
         }
         // Create APOD Entity
         let apodEntity = APODEntity(context: managedObjectContext)
-        apodEntity.date = apodItem.date
+        apodEntity.date = YearMonthDay(apodItem.date ?? "")?.asDate()
         apodEntity.thumbnail = apodItem.thumbnail_url
         apodEntity.explanation = apodItem.explanation
         apodEntity.url = apodItem.url
@@ -30,11 +30,11 @@ struct ApodDataLoader {
         PersistenceController.shared.save()
         return apodEntity
     }
-    func fetchSavedAPODFor(day: String) -> APODEntity? {
+    func fetchSavedAPODFor(day: Date) -> APODEntity? {
         // Create Fetch Request
         let fetchRequest: NSFetchRequest<APODEntity> = APODEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(
-            format: "date = %@", day
+            format: "date = %@", day as CVarArg
         )
         let context = PersistenceController.shared.container.viewContext
         
@@ -63,6 +63,22 @@ struct ApodDataLoader {
             // Execute Fetch Request
             let results = try context.fetch(fetchRequest)
             return results
+
+        } catch {
+            print("Unable to Execute Fetch Request, \(error)")
+        }
+        return nil
+    }
+    func fetchLatestAPOD() -> APODEntity? {
+        // Create Fetch Request
+        let fetchRequest: NSFetchRequest<APODEntity> = APODEntity.fetchRequest()
+        let sort = NSSortDescriptor(key: "date", ascending: false)
+        fetchRequest.sortDescriptors = [sort]
+        let context = PersistenceController.shared.container.viewContext
+        do {
+            // Execute Fetch Request
+            let apodEntity = try context.fetch(fetchRequest).first
+            return apodEntity
 
         } catch {
             print("Unable to Execute Fetch Request, \(error)")

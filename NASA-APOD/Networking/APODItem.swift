@@ -35,5 +35,11 @@ extension APODEntity {
           return nil
       }
    }
+    func dateString() -> String? {
+        guard let apodDate = date else {
+            return nil
+        }
+        return YearMonthDay(localTime: apodDate).description
+    }
 }
 

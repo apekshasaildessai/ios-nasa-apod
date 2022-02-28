@@ -31,7 +31,7 @@ class APODViewController: UIViewController {
     var apodDataLoader: ApodDataLoader?
     var currentAPOD: APODEntity?
     var customSpinnerView : UIView?
-    var showFavoritedAPODDate: String?
+    var showFavoritedAPODDate: Date?
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -43,7 +43,7 @@ class APODViewController: UIViewController {
         
         addTapGestureToImageView()
         apodDataLoader = ApodDataLoader()
-        fetchAPODFor(date: YearMonthDay.today.description)
+        fetchAPODFor(date: YearMonthDay.today.asDate()!)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -65,19 +65,23 @@ class APODViewController: UIViewController {
         }
         updatePictureViewConstraints()
     }
-    func fetchAPODFor(date: String) {
+    func fetchAPODFor(date: Date) {
         showLoadingView()
         if let savedAPOD = self.apodDataLoader?.fetchSavedAPODFor(day: date) {
             updateAPODDetails(apodItem: savedAPOD)
             return
         }
-        networkManager.loadAPODData(dateString: date) { [weak self] apodItem in
+        networkManager.loadAPODData(dateString: YearMonthDay(localTime: date).description) { [weak self] apodItem in
             if apodItem != nil && apodItem?.date != nil {
                 if let savedAPODEntity = self?.apodDataLoader?.saveAPOD(apodItem: apodItem!) {
-                    self?.updateAPODDetails(apodItem: savedAPODEntity)
+                    DispatchQueue.main.async {
+                        self?.updateAPODDetails(apodItem: savedAPODEntity)
+                    }
                 }
             } else {
-                self?.handleErrorFetchingAPOD()
+                DispatchQueue.main.async {
+                    self?.handleErrorFetchingAPOD()
+                }
             }
         }
     }
@@ -125,7 +129,7 @@ class APODViewController: UIViewController {
             self.dateLabel.text = yearMonthDay.longDate
             self.dateTextField.resignFirstResponder()
             //Update POD
-            fetchAPODFor(date: yearMonthDay.description)
+            fetchAPODFor(date: datePickerView.date)
         }
     }
     func addNavBarImage() {
@@ -158,8 +162,8 @@ class APODViewController: UIViewController {
         //Update Date on picker
         //TODO: remove force unwrapping
         if let date = currentAPOD?.date {
-            let yearMonthDay = YearMonthDay(date)
-            dateLabel.text = yearMonthDay!.longDate
+            let yearMonthDay = YearMonthDay(localTime: date)
+            dateLabel.text = yearMonthDay.longDate
             dateTextField.resignFirstResponder()
         }
     }
@@ -227,7 +231,7 @@ class APODViewController: UIViewController {
             }
         }
     }
-    func setFavoratedDate(date: String)  {
+    func setFavoratedDate(date: Date?)  {
        showFavoritedAPODDate = date
     }
     //Utility method
@@ -275,9 +279,16 @@ extension APODViewController {
     
     func handleErrorFetchingAPOD()  {
         removeLoadingView { [weak self] in
-            let alert = UIAlertController(title: "Error Loading Picture for Selected Date", message: "No Picture found or Network Error", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Error Loading Picture for this Day", message: "No Picture found or Network Error", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self?.present(alert, animated: true, completion: nil)
+            
+            if self?.currentAPOD == nil {
+                //show latested saved APOD
+                if let latestedAPOD = self?.apodDataLoader?.fetchLatestAPOD() {
+                    self?.updateAPODDetails(apodItem: latestedAPOD)
+                }
+            }
         }
     }
 }
