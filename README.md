@@ -23,17 +23,20 @@ Technological Features:
 - Uses YouTube-Player-iOS-Helper library to play the youtube videos 
 
 Supported iOS versions:
-14.5 and above
+- 14.5 and above
 
 Development Setup
-Xcode 12.5.1 and Swift 5
+- Xcode 12.5.1 and Swift 5
 
 **Design choices:**
 Nowadays, phones are getting bigger, hence the design choice to add most of the buttons at the bottom of screen for easy tapping.
 Check the below mockup wireframes for the initial design. Most of the buttons (back buttons) are placed at the bottom
 
+
 **Mockups:**
+
 ![App-Mockup](https://user-images.githubusercontent.com/16442328/155944283-d275ccd0-79e3-488e-97cb-2392e0f078de.jpg)
+
 
 
 Screenshots
