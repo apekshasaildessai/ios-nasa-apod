@@ -187,17 +187,19 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MUN-N3-ia1" customClass="PanZoomImageView" customModule="NASA_APOD" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="112" width="414" height="728"/>
+                                <rect key="frame" x="0.0" y="112" width="414" height="706"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6c6-vu-JQc">
-                                <rect key="frame" x="20" y="840" width="374" height="22"/>
+                                <rect key="frame" x="20" y="818" width="374" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QyV-4P-xa1">
-                                        <rect key="frame" x="0.0" y="0.0" width="60" height="22"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="60" id="J5q-rd-dW3"/>
+                                            <constraint firstAttribute="width" constant="44" id="J5q-rd-dW3"/>
+                                            <constraint firstAttribute="height" constant="44" id="Q9H-lB-sTM"/>
                                         </constraints>
+                                        <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" image="arrow.backward" catalog="system"/>
                                         <connections>
                                             <action selector="backButtonTapped:" destination="YdY-0f-57h" eventType="touchUpInside" id="JYk-Pi-yId"/>
@@ -255,7 +257,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="8g5-hE-PdE">
-                                <rect key="frame" x="20" y="108" width="374" height="729"/>
+                                <rect key="frame" x="20" y="108" width="374" height="707"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="0IS-PV-e67">
                                     <size key="itemSize" width="150" height="150"/>
@@ -299,13 +301,15 @@
                                 </cells>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aar-L9-XX5">
-                                <rect key="frame" x="20" y="852" width="374" height="22"/>
+                                <rect key="frame" x="20" y="830" width="374" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uto-Ml-NIy">
-                                        <rect key="frame" x="5" y="0.0" width="60" height="22"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="60" id="O7Y-A3-iVd"/>
+                                            <constraint firstAttribute="height" constant="44" id="NdY-aM-prv"/>
+                                            <constraint firstAttribute="width" constant="44" id="tRy-1q-z2j"/>
                                         </constraints>
+                                        <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" image="arrow.backward" catalog="system"/>
                                         <connections>
                                             <action selector="backButtonTapped:" destination="21E-7I-rPh" eventType="touchUpInside" id="JSJ-dR-bsh"/>
@@ -314,7 +318,7 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="uto-Ml-NIy" firstAttribute="leading" secondItem="aar-L9-XX5" secondAttribute="leading" constant="5" id="FeS-s1-b94"/>
+                                    <constraint firstItem="uto-Ml-NIy" firstAttribute="leading" secondItem="aar-L9-XX5" secondAttribute="leading" id="FeS-s1-b94"/>
                                     <constraint firstAttribute="bottom" secondItem="uto-Ml-NIy" secondAttribute="bottom" id="IdX-9H-F4K"/>
                                     <constraint firstItem="uto-Ml-NIy" firstAttribute="top" secondItem="aar-L9-XX5" secondAttribute="top" id="xLm-7p-07F"/>
                                 </constraints>
