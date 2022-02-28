@@ -35,6 +35,7 @@ class APODViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        NotificationCenter.default.addObserver(self, selector: #selector(APODViewController.rotated), name: UIDevice.orientationDidChangeNotification, object: nil)
         self.dateTextField.datePicker(target: self,
                                   doneAction: #selector(doneDateSelection),
                                   cancelAction: #selector(cancelDateSelection),
@@ -53,6 +54,17 @@ class APODViewController: UIViewController {
             showFavoritedAPODDate = nil
         }
     }
+    deinit {
+         NotificationCenter.default.removeObserver(self)
+    }
+    @objc func rotated() {
+        if UIDevice.current.orientation.isLandscape {
+            print("Landscape")
+        } else {
+            print("Portrait")
+        }
+        updatePictureViewConstraints()
+    }
     func fetchAPODFor(date: String) {
         showLoadingView()
         if let savedAPOD = self.apodDataLoader?.fetchSavedAPODFor(day: date) {
@@ -60,11 +72,12 @@ class APODViewController: UIViewController {
             return
         }
         networkManager.loadAPODData(dateString: date) { [weak self] apodItem in
-            if apodItem != nil {
+            if apodItem != nil && apodItem?.date != nil {
                 if let savedAPODEntity = self?.apodDataLoader?.saveAPOD(apodItem: apodItem!) {
                     self?.updateAPODDetails(apodItem: savedAPODEntity)
                 }
-                
+            } else {
+                self?.handleErrorFetchingAPOD()
             }
         }
     }
@@ -187,13 +200,18 @@ class APODViewController: UIViewController {
             return
         }
         apodPictureView.thumbailImage = image
-        let ratio = image.size.width / image.size.height
-        var newHeight = apodPictureView.frame.width / ratio
-        if newHeight > maxImageViewHeight() {
-            newHeight = maxImageViewHeight()
+        updatePictureViewConstraints()
+    }
+    func updatePictureViewConstraints()  {
+        if let image = apodPictureView.thumbailImage {
+            let ratio = image.size.width / image.size.height
+            var newHeight = apodPictureView.frame.width / ratio
+            if newHeight > maxImageViewHeight() {
+                newHeight = maxImageViewHeight()
+            }
+            imageViewHeightConstraint.constant = newHeight
+            view.layoutIfNeeded()
         }
-        imageViewHeightConstraint.constant = newHeight
-        view.layoutIfNeeded()
     }
     func updateFavoriteButton()  {
         if let apodEntity = currentAPOD {
@@ -224,7 +242,7 @@ class APODViewController: UIViewController {
     }
     func maxImageViewHeight() -> CGFloat {
         let availableHeight = view.frame.height - apodPictureView.frame.origin.y
-        return availableHeight - CGFloat(APODViewConstants.minBottomSpace)
+        return availableHeight - view.frame.height/3
     }
     func getThumbnailUrl(apodEntity: APODEntity) -> String? {
         let apodMediaType = getMediaTypeFor(apodEntity: apodEntity)
@@ -241,17 +259,25 @@ class APODViewController: UIViewController {
 extension APODViewController {
     func showLoadingView () {
         let loadingVC = LoadingViewController()
-
+        
         // Animate loadingVC over the existing views on screen
         loadingVC.modalPresentationStyle = .overCurrentContext
-
+        
         // Animate loadingVC with a fade in animation
         loadingVC.modalTransitionStyle = .crossDissolve
                
         present(loadingVC, animated: true, completion: nil)
     }
     
-    func removeLoadingView () {
-        self.dismiss(animated: false, completion: nil)
+    func removeLoadingView (completion: (() -> Void)? = nil) {
+        self.dismiss(animated: false, completion: completion)
+    }
+    
+    func handleErrorFetchingAPOD()  {
+        removeLoadingView { [weak self] in
+            let alert = UIAlertController(title: "Error Loading Picture for Selected Date", message: "No Picture found or Network Error", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self?.present(alert, animated: true, completion: nil)
+        }
     }
 }

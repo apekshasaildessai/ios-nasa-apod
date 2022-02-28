@@ -57,6 +57,7 @@ extension UITextField {
                                                     height: UIScreen.main.bounds.height))
         datePicker.preferredDatePickerStyle = .wheels
         datePicker.datePickerMode = datePickerMode
+        datePicker.minimumDate = Utilities.apodMinDate
         self.inputView = datePicker
         
         let toolBar = UIToolbar(frame: CGRect(x: 0,
@@ -79,5 +80,19 @@ extension UITextField {
        iconContainerView.addSubview(iconView)
        leftView = iconContainerView
        leftViewMode = .always
+    }
+}
+
+struct Utilities {
+    static var apodMinDate: Date? {
+        // Specify date components
+        var dateComponents = DateComponents()
+        dateComponents.year = 1995
+        dateComponents.month = 1
+        dateComponents.day = 1
+        // Create date from components
+        let userCalendar = Calendar(identifier: .gregorian) // since the components above (like year 1980) are for Gregorian
+        let date = userCalendar.date(from: dateComponents)
+        return date
     }
 }

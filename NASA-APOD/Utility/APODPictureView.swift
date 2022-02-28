@@ -6,6 +6,9 @@
 //
 
 import UIKit
+enum APODPictureViewConstants {
+    static let nibName = "APODPictureView"
+}
 
 class APODPictureView: UIView {
     @IBOutlet var contentView: UIView!
@@ -49,7 +52,7 @@ class APODPictureView: UIView {
     
     func initSubviews() {
         // standard initialization logic
-        let nib = UINib(nibName: "APODPictureView", bundle: nil)
+        let nib = UINib(nibName: APODPictureViewConstants.nibName, bundle: nil)
         nib.instantiate(withOwner: self, options: nil)
         contentView.frame = bounds
         addSubview(contentView)
