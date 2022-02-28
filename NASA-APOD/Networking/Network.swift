@@ -6,9 +6,18 @@
 //
 
 import Foundation
+import Network
 class Network {
+    var isNetworkAvailable = true
+    init() {
+        startNetworkMonitoring()
+    }
     let baseUrl = "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&thumbs=true"
     func loadAPODData(dateString: String, completion:@escaping (APODItem?) -> ()) {
+        if isNetworkAvailable == false {
+            completion(nil)
+            return
+        }
          guard let url = URL(string: baseUrl + "&date=" + dateString) else {
              print("Invalid url...")
              return
@@ -77,11 +86,25 @@ class Network {
 
             // Handle potential file system errors
             catch let fileError {
-                completion(error)
+                completion(fileError)
             }
         }
 
         // Start the download
         task.resume()
+    }
+    func startNetworkMonitoring()  {
+        let monitor = NWPathMonitor()
+        monitor.pathUpdateHandler = { [weak self] path in
+            if path.status == .satisfied {
+                //"We're connected!"
+                self?.isNetworkAvailable = true
+            } else {
+                //"No connection."
+                self?.isNetworkAvailable = false
+            }
+        }
+        let queue = DispatchQueue(label: "Monitor")
+        monitor.start(queue: queue)
     }
 }
